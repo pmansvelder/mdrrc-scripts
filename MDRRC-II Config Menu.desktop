@@ -1,0 +1,13 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Terminal=false
+Name=MDRRC-II Config Editor
+Exec=/home/pman/Dropbox/Peter/Scripts/mdrrc2/menu.py
+Path=/home/pman/Dropbox/Peter/Scripts/mdrrc2/
+Type=Application
+Icon=applications-games-symbolic
+Icon[nl]=/home/pman/Dropbox/Peter/Scripts/mdrrc2/train_icon.png
+Comment[nl]=Menu voor MDRRC-II config editor
+Comment=Menu voor MDRRC-II config editor
+Name[nl]=MDRRC-II Config Menu

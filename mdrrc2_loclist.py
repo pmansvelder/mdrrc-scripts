@@ -150,15 +150,9 @@ class LoclistFrame(wx.Frame, list):
         global sb
         
         #All cells have a value, regardless of the editor.
-        print 'Changed cell: (%u, %u)' % (Row, Col)
-        print 'value: %s' % self.locgrid.GetCellValue(Row, Col)
-        
-        print ''            #blank line to make it pretty.
 
         # Modify item in list as a result from editing in the grid
         key = self.locgrid.GetCellValue(Row, 0)
-        print('Data was: '+listoflocs[int(key)][Col-1])
-        print('Data is : '+self.locgrid.GetCellValue(Row, Col))
         listoflocs[int(key)][Col-1] = self.locgrid.GetCellValue(Row, Col).encode('ascii','ignore')
         if Col == 1:
            mdrrc2serial.ChangeLocName(int(key),self.locgrid.GetCellValue(Row, Col))
@@ -174,10 +168,7 @@ class LoclistFrame(wx.Frame, list):
         #Save the index and client data for later use.
         self.locgrid.index = self.comboBox.GetSelection()
         self.locgrid.data = self.comboBox.GetClientData(self.locgrid.index)
-        
-        print 'ComboBoxChanged: %s' % self.comboBox.GetValue()
-        print 'ComboBox index: %u' % self.locgrid.index 
-        print 'ComboBox data: %u\n' % self.locgrid.data
+
         event.Skip()
 
     #This method fires when any text editing is done inside the text portion
@@ -193,8 +184,6 @@ class LoclistFrame(wx.Frame, list):
         #that later, once all of the text has been entered.
         self.locgrid.index = self.comboBox.GetSelection()
         
-        print 'ComboBoxText: %s' % self.comboBox.GetValue()
-        print 'ComboBox index: %u\n' % self.locgrid.index
         event.Skip()
 
     #This method fires after editing is finished for any cell. At this point
@@ -227,8 +216,6 @@ class LoclistFrame(wx.Frame, list):
             
             #Update the silly client data counter0
             self.locgrid.counter = self.locgrid.counter + 1
-        
-        print 'OnGrid1EditorHidden: (%u, %u)\n' % (Row, Col)
 
         event.Skip()
 
@@ -237,8 +224,6 @@ class LoclistFrame(wx.Frame, list):
     def OnGrid1GridEditorCreated(self, event):
         Row = event.GetRow()
         Col = event.GetCol()
-        
-        print 'OnGrid1EditorCreated: (%u, %u)\n' % (Row, Col)
         
         #In this example, all cells in row 0 are GridCellChoiceEditors,
         #so we need to setup the selection list and bindings. We can't
@@ -265,28 +250,23 @@ class LoclistFrame(wx.Frame, list):
         dlg.Destroy() # finally destroy it when finished.
 
     def SaveAndReset(self, e):
-        print('save and reset')
         mdrrc2serial.StopConfig()
         self.Destroy()
 
     def NewLoco(self, e):
-        print(listoflocs)
         chgdep = NewLocoDialog(None, 
             title=_('New Loco Address'))
         chgdep.ShowModal()
         chgdep.Destroy()  
 
     def DelLoc(self, e):
-        print('delete loc')
         BuildLocoGrid(listoflocs,self.locgrid)
 
     def SaveOnly(self, e):
-        print('save only')
         mdrrc2serial.StoreConfig()
         self.Destroy()
         
     def SaveOnly(self, e):
-        print('refresh')
         wx.Yield()
         BuildLocoGrid(list, self.locgrid)
         
@@ -333,7 +313,6 @@ class NewLocoDialog(wx.Dialog):
         closeButton.Bind(wx.EVT_BUTTON, self.OnCancel)
            
     def OnClose(self, e):
-        print('Adding loco '+text.GetValue())
         UpdateStatus(mdrrc2serial.AddLoco(text.GetValue()))
         self.Destroy()
         
@@ -342,7 +321,6 @@ class NewLocoDialog(wx.Dialog):
 
 def BuildLocoGrid(list,locgrid):
   ProtocolEditor = wx.grid.GridCellChoiceEditor(['DCC','MM'], allowOthers=False)
-  print(list)
   for l, (index) in enumerate(zip(list)):
     locgrid.SetCellValue(l, 0, str(index[0]))
     locgrid.SetReadOnly(l, 0, True)

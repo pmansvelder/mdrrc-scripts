@@ -124,18 +124,11 @@ class ConfiglistFrame(wx.Frame, list):
         global configList
         
         #All cells have a value, regardless of the editor.
-        print 'Changed cell: (%u, %u)' % (Row, Col)
-        print 'value: %s' % self.locgrid.GetCellValue(Row, Col)
-        
-        print ''            #blank line to make it pretty.
 
         # Modify item in list as a result from editing in the grid
         key = self.locgrid.GetCellValue(Row, 0)
         OldValue = configList[key]
         NewValue = self.locgrid.GetCellValue(Row, Col).encode('ascii','ignore')
-        print('Data was: '+OldValue)
-        print('Data is : '+NewValue)
-        print('Changing key '+key+' to '+NewValue)
         configList[key] = NewValue
         mdrrc2serial.ChangeConfig(key, NewValue, configList)
         event.Skip()
@@ -147,10 +140,6 @@ class ConfiglistFrame(wx.Frame, list):
         #Save the index and client data for later use.
         self.locgrid.index = self.comboBox.GetSelection()
         self.locgrid.data = self.comboBox.GetClientData(self.locgrid.index)
-        
-        print 'ComboBoxChanged: %s' % self.comboBox.GetValue()
-        print 'ComboBox index: %u' % self.locgrid.index 
-        print 'ComboBox data: %u\n' % self.locgrid.data
         event.Skip()
 
 
@@ -166,9 +155,6 @@ class ConfiglistFrame(wx.Frame, list):
         #entered. At this point there is no client data. We will have to add
         #that later, once all of the text has been entered.
         self.locgrid.index = self.comboBox.GetSelection()
-        
-        print 'ComboBoxText: %s' % self.comboBox.GetValue()
-#        print 'ComboBox index: %u\n' % self.locgrid.index
         event.Skip()
 
 
@@ -203,8 +189,6 @@ class ConfiglistFrame(wx.Frame, list):
             #Update the silly client data counter
             self.locgrid.counter = self.locgrid.counter + 1
         
-        print 'OnGrid1EditorHidden: (%u, %u)\n' % (Row, Col)
-
         event.Skip()
 
     #This method fires when a cell editor is created. It appears that this
@@ -212,8 +196,6 @@ class ConfiglistFrame(wx.Frame, list):
     def OnGrid1GridEditorCreated(self, event):
         Row = event.GetRow()
         Col = event.GetCol()
-        
-        print 'OnGrid1EditorCreated: (%u, %u)\n' % (Row, Col)
         
         #In this example, all cells in row 0 are GridCellChoiceEditors,
         #so we need to setup the selection list and bindings. We can't
@@ -238,12 +220,10 @@ class ConfiglistFrame(wx.Frame, list):
         dlg.Destroy() # finally destroy it when finished.
 
     def SaveAndReset(self, e):
-        print('save and reset')
         mdrrc2serial.StopConfig()
         self.Destroy()
 
     def SaveOnly(self, e):
-        print('save only')
         mdrrc2serial.StoreConfig()
         self.Destroy()
         
@@ -264,7 +244,6 @@ def startup():
   config = cf.ConfigParser()
   config.read('settings.cfg')
   settings = [config.get('Connection', 'port').encode('ascii','ignore'), config.get('Connection', 'speed').encode('ascii','ignore')]
-
   if mdrrc2serial.TestConnection():
 #    configList = {'MM locs only': 'True'}
     configList = mdrrc2serial.ReadConfig()

@@ -40,15 +40,15 @@ class MenuFrame(wx.Frame):
         tb = self.CreateToolBar()
         
         ID_CONFIGEDIT = wx.NewId()
-        tb.AddLabelTool(id=ID_CONFIGEDIT, label=_('Config Editor'), bitmap=wx.Bitmap('/usr/share/icons/oxygen/128x128/categories/preferences-other.png'), longHelp='Open configuration Editor')
+        tb.AddLabelTool(id=ID_CONFIGEDIT, label=_('Config Editor'), bitmap=wx.Bitmap('config.png'), longHelp='Open configuration Editor')
         self.Bind(wx.EVT_TOOL, self.ConfigEditor, id=ID_CONFIGEDIT)
         
         ID_LOCLIST = wx.NewId()
-        tb.AddLabelTool(id=ID_LOCLIST, label=_('Loclist Editor'), bitmap=wx.Bitmap('/usr/share/icons/oxygen/128x128/actions/view-media-lyrics.png'), longHelp=_('Open Loclist editor'))
+        tb.AddLabelTool(id=ID_LOCLIST, label=_('Loclist Editor'), bitmap=wx.Bitmap('loclist.png'), longHelp=_('Open Loclist editor'))
         self.Bind(wx.EVT_TOOL, self.LocListEditor, id=ID_LOCLIST)
         
         ID_SETTINGS = wx.NewId()
-        tb.AddLabelTool(id=ID_SETTINGS, label=_('Change Settings'), bitmap=wx.Bitmap('/usr/share/icons/oxygen/128x128/actions/configure.png'), longHelp=_('Change settings of program'))
+        tb.AddLabelTool(id=ID_SETTINGS, label=_('Change Settings'), bitmap=wx.Bitmap('settings.png'), longHelp=_('Change port settings of program'))
         self.Bind(wx.EVT_TOOL, self.Settings, id=ID_SETTINGS)
         
         tb.Realize()

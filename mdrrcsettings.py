@@ -50,7 +50,6 @@ class Settings(wx.Dialog):
         config.set('Connection','speed', self.settings[1])
         with open('settings.cfg', 'wb') as configfile:
           config.write(configfile)
-        print self.settings
         self.EndModal(wx.ID_OK)
 
     def GetSettings(self):

@@ -2,13 +2,15 @@ import serial
 import ConfigParser as cf
 import os
 
-config = cf.ConfigParser()
-config.read('settings.cfg')
-
-mdrrc2_port = config.get('Connection', 'port').encode('ascii','ignore')
-mdrrc2_baud = config.get('Connection', 'speed').encode('ascii','ignore')
+def ReadConfigParams():
+  config = cf.ConfigParser()
+  config.read('settings.cfg')
+  port = config.get('Connection', 'port').encode('ascii','ignore')
+  speed = config.get('Connection', 'speed').encode('ascii','ignore')
+  return (port, speed)
 
 def TestConnection():
+  (mdrrc2_port,mdrrc2_baud) = ReadConfigParams()
   try:
     with serial.Serial(port=mdrrc2_port,baudrate=mdrrc2_baud, timeout=1) as ser:
       ser.write('HELP\r')
@@ -19,6 +21,7 @@ def TestConnection():
       return False
 
 def ReceiveLocList():
+  (mdrrc2_port,mdrrc2_baud) = ReadConfigParams()
   with serial.Serial(port=mdrrc2_port,baudrate=mdrrc2_baud, timeout=1) as ser:
     ser.write('LOCLIST\r')
     locdata = ser.read(2000)
@@ -26,16 +29,19 @@ def ReceiveLocList():
     return locdata
 
 def ChangeLocName(address, newname):
+  (mdrrc2_port,mdrrc2_baud) = ReadConfigParams()
   with serial.Serial(port=mdrrc2_port,baudrate=mdrrc2_baud, timeout=1) as ser:
     ser.write('LOCNAME '+str(address)+' '+newname+'\r')
     ser.close()
 
 def ChangeLocType(address):
+  (mdrrc2_port,mdrrc2_baud) = ReadConfigParams()
   with serial.Serial(port=mdrrc2_port,baudrate=mdrrc2_baud, timeout=1) as ser:
     ser.write('LOCTYPE '+str(address)+'\r')
     ser.close()
     
 def AddLoco(address):
+  (mdrrc2_port,mdrrc2_baud) = ReadConfigParams()
   with serial.Serial(port=mdrrc2_port,baudrate=mdrrc2_baud, timeout=1) as ser:
     ser.write('LOCADD '+str(address)+'\r')
     message = ser.read(255)
@@ -43,16 +49,19 @@ def AddLoco(address):
     return message
 
 def StopConfig():
+  (mdrrc2_port,mdrrc2_baud) = ReadConfigParams()
   with serial.Serial(port=mdrrc2_port,baudrate=mdrrc2_baud, timeout=1) as ser:
     ser.write('EXIT\r')
     ser.close()
 
 def StoreConfig():
+  (mdrrc2_port,mdrrc2_baud) = ReadConfigParams()
   with serial.Serial(port=mdrrc2_port,baudrate=mdrrc2_baud, timeout=1) as ser:
     ser.write('STORE\r')
     ser.close()
 
 def ParseLocList():
+  (mdrrc2_port,mdrrc2_baud) = ReadConfigParams()
   loclist = {}
   locdump=ReceiveLocList().splitlines()
   for d in locdump:
@@ -66,6 +75,7 @@ def ParseLocList():
   return loclist
 
 def ReadConfig():
+  (mdrrc2_port,mdrrc2_baud) = ReadConfigParams()
   configlist = {}
   with serial.Serial(port=mdrrc2_port,baudrate=mdrrc2_baud, timeout=1) as ser:
     ser.write('STAT\r')
@@ -79,10 +89,9 @@ def ReadConfig():
   return configlist
 
 def ChangeConfig(key, value, configlist):
+  (mdrrc2_port,mdrrc2_baud) = ReadConfigParams()
   for k in configlist:
     if key == k:
-      print('Old value: '+configlist[k])
-      print('New value: '+value)
       with serial.Serial(port=mdrrc2_port,baudrate=mdrrc2_baud, timeout=1) as ser:
         if k == 'S88 frequency':
           ser.write('S88FREQ'+' '+str(value)+'\r')
