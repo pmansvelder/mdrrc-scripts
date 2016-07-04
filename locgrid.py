@@ -5,6 +5,9 @@ import wx.grid
 import mdrrc2serial
 import copy
 import gettext
+import mdrrcsettings
+import ConfigParser as cf
+import os
 
 # Language suppport
 gettext.install('mdrrc-editor')
@@ -13,6 +16,11 @@ class LoclistFrame(wx.Frame, list):
     def __init__(self, parent, list):
         wx.Frame.__init__(self, parent, -1, _("MDRRC-II Loc Editor"), size=(350, 1300))
 
+        # Read settings for config program
+        config = cf.ConfigParser()
+        config.read('settings.cfg')
+        self.settings = [config.get('Connection', 'port').encode('ascii','ignore'), config.get('Connection', 'speed').encode('ascii','ignore')]
+        
         global selected_address
         
         # A statusbar
@@ -363,18 +371,18 @@ def LocGrid(list):
   frame.Show(True)
   app.MainLoop()
   
-#### testje
+# Read settings for config program
+config = cf.ConfigParser()
+config.read('settings.cfg')
+settings = [config.get('Connection', 'port').encode('ascii','ignore'), config.get('Connection', 'speed').encode('ascii','ignore')]
 
-loclist = mdrrc2serial.ParseLocList()
-if len(loclist) > 0:
-#  PrintLocList(loclist)
-  LocGrid(loclist)
-#  mdrrc2serial.StopConfig()
+if mdrrc2serial.TestConnection():
+  loclist = mdrrc2serial.ParseLocList()
+  if len(loclist) > 0:
+    LocGrid(loclist)
+  else:
+    app = wx.PySimpleApp()
+    Foutmelding(None, _('Centrale not in config mode or not connected!\nMake sure MDRRC-II controller is connected and set to config mode (SET->CON)...'))
 else:
   app = wx.PySimpleApp()
-  Foutmelding(None, _('Centrale not in config mode or not connected!\nMake sure MDRRC-II controller is connected and set to config mode (SET->CON)...'))
-  print("Not able to read loclist from controller...")
-  print("Make sure MDRRC-II controller is connected and set to config mode (SET->CON)...")
-
-  
-
+  Foutmelding(None, _('Connection parameters not correct or controller not connected!'))

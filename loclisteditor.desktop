@@ -1,3 +1,5 @@
+#!/usr/bin/env xdg-open
+
 [Desktop Entry]
 Comment=
 Terminal=false
@@ -6,3 +8,4 @@ Exec=/home/pman/Dropbox/Peter/Scripts/mdrrc2/locgrid.py
 Path=/home/pman/Dropbox/Peter/Scripts/mdrrc2/
 Type=Application
 Icon=applications-games-symbolic
+Icon[nl]=/usr/share/icons/oxygen/256x256/mimetypes/application-vnd.oasis.opendocument.spreadsheet-template.png
