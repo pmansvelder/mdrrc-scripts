@@ -1,0 +1,8 @@
+[Desktop Entry]
+Comment=
+Terminal=false
+Name=MDRRC-II Config Editor
+Exec=/home/pman/Dropbox/Peter/Scripts/mdrrc2/setconfig.py
+Path=/home/pman/Dropbox/Peter/Scripts/mdrrc2/
+Type=Application
+Icon=applications-games-symbolic

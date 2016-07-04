@@ -1,0 +1,8 @@
+[Desktop Entry]
+Comment=
+Terminal=false
+Name=MDRRC-II Loc Editor
+Exec=/home/pman/Dropbox/Peter/Scripts/mdrrc2/locgrid.py
+Path=/home/pman/Dropbox/Peter/Scripts/mdrrc2/
+Type=Application
+Icon=applications-games-symbolic
