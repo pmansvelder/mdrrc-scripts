@@ -246,7 +246,9 @@ def startup():
   settings = [config.get('Connection', 'port').encode('ascii','ignore'), config.get('Connection', 'speed').encode('ascii','ignore')]
   if mdrrc2serial.TestConnection():
 #    configList = {'MM locs only': 'True'}
+    global configList
     configList = mdrrc2serial.ReadConfig()
+
     if len(configList) > 0:
       frame = ConfiglistFrame(None, configList)
     else:
