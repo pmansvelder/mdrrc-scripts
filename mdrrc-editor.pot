@@ -1,0 +1,197 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-07-02 15:04+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: locgrid.py:13
+msgid "MDRRC-II Loc Editor"
+msgstr "MDRRC-II loklijst editor"
+
+#: locgrid.py:26
+msgid "&About"
+msgstr "&Over"
+
+#: locgrid.py:25
+msgid " Information about this program"
+msgstr " Informatie over dit programma"
+
+#: locgrid.py:30
+msgid "&New loco"
+msgstr "&Nieuwe Lok"
+
+#: locgrid.py:29
+msgid " Create new loco"
+msgstr " Voeg een nieuwe loc toe aan de lijst"
+
+#: locgrid.py:34
+msgid "&Delete loco"
+msgstr "Verwij&der Lok"
+
+#: locgrid.py:33
+msgid " Delete loco"
+msgstr " Verwijder een lok uit de lijst"
+
+#: locgrid.py:38
+msgid "&Save and exit"
+msgstr "Bewaar en &stop"
+
+#: locgrid.py:37
+msgid " Save and reboot"
+msgstr " Bewaar wijzigingen en herstart controller"
+
+#: locgrid.py:41
+msgid "Save &only"
+msgstr "&Bewaar wijzigingen"
+
+#: locgrid.py:40
+msgid " Save without reboot"
+msgstr " Bewaar wijzigingen"
+
+#: locgrid.py:45
+msgid "E&xit without reset"
+msgstr "Stoppen &zonder herstarten"
+
+#: locgrid.py:44
+msgid " Terminate the program"
+msgstr " Stop programma"
+
+#: locgrid.py:50
+msgid "&File"
+msgstr "&Bestand"
+
+#: locgrid.py:59
+msgid "New Loco"
+msgstr " Nieuwe loc"
+
+#: locgrid.py:59
+msgid "Add a new loco"
+msgstr " Voeg een nieuwe lok toe"
+
+#: locgrid.py:60
+msgid "Delete Loco"
+msgstr "Verwijder loc"
+
+#: locgrid.py:60
+msgid "Delete an existing loco"
+msgstr "Verwijder een bestaande lok"
+
+#: locgrid.py:61
+msgid "Store config"
+msgstr "Bewaar configuratie"
+
+#: locgrid.py:61
+msgid "Store config on controller"
+msgstr "Bewaar configuratie in controller"
+
+#: locgrid.py:62
+msgid "Store config and reset"
+msgstr "Bewaar config en herstart controller"
+
+#: locgrid.py:62
+msgid "Store config and reset controller"
+msgstr "Bewaar config en herstart controller"
+
+#: locgrid.py:63
+msgid "Refresh"
+msgstr "Ververs"
+
+#: locgrid.py:63
+msgid "Refresh listing"
+msgstr "Ververs lijst"
+
+#: locgrid.py:84
+msgid "Address"
+msgstr "Adres"
+
+#: locgrid.py:85
+msgid "Name"
+msgstr "Naam"
+
+#: locgrid.py:86
+msgid "Protocol"
+msgstr "Protocol"
+
+#: locgrid.py:245
+msgid "A loc editor for the MDRRC-II system"
+msgstr "Een editor voor de MDRRC-II lok lijst"
+
+#: locgrid.py:245
+msgid "About Loc Editor"
+msgstr "Over dit programma"
+
+#: locgrid.py:257 locgrid.py:283
+msgid "New Loco Address"
+msgstr "Nieuw lokadres"
+
+#: locgrid.py:290
+msgid "Loco"
+msgstr "Lok"
+
+#: locgrid.py:295
+msgid "Adress"
+msgstr "Adres"
+
+#: locgrid.py:304
+msgid "Save"
+msgstr "Bewaar"
+
+#: locgrid.py:305
+msgid "Cancel"
+msgstr "Annuleer"
+
+#: locgrid.py:351
+msgid "Current loc addresses: "
+msgstr "Huidige lokadressen: "
+
+#: locgrid.py:353
+msgid "MDRRC-II loc editor: Error!"
+msgstr "MDRRC-II lok edior: Foutmelding!"
+
+#: locgrid.py:374
+msgid ""
+"Centrale not in config mode or not connected!\n"
+"Make sure MDRRC-II controller is connected and set to config mode (SET-"
+">CON)..."
+msgstr "Centrale staat niet in config mode of is niet aangesloten!\n"
+"Zorg ervoor dat de MDRRC-II controller aangesloten is en in config mode staat (SET->CON)"
+
+# Setconfig strings
+
+#: setconfig.py:13
+msgid "MDRRC-II Config List"
+msgstr "MDRRC-II Configuratie"
+
+#: setconfig.py:63
+msgid "Key"
+msgstr "Parameter"
+
+#: setconfig.py:64
+msgid "Value"
+msgstr "Waarde"
+
+#: setconfig.py:220
+msgid "A config editor for the MDRRC-II system"
+msgstr "Configuratie MDRCC-II systeem"
+
+#: setconfig.py:220
+msgid "About Config Editor"
+msgstr "Over Config Editor"
+
+#: setconfig.py:241
+msgid "MDRRC-II config editor: Error!"
+msgstr "MDRRC-II config editor: Fout!"
+
