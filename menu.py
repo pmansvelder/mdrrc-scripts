@@ -31,6 +31,9 @@ class MenuFrame(wx.Frame):
         self .Bind(wx.EVT_MENU, self.OnAbout, menuItem)
         filemenu.AppendSeparator()
 
+        menuItem = filemenu.Append(wx.ID_EXIT,_("&Quit menu"),_(" Terminate the program"))
+        self.Bind(wx.EVT_MENU, self.Quit, menuItem)
+
         # Creating the menubar.
         menuBar = wx.MenuBar()
         menuBar.Append(filemenu,_("&File")) # Adding the "filemenu" to the MenuBar
@@ -64,6 +67,9 @@ class MenuFrame(wx.Frame):
 
     def ConfigEditor(self, e):
         mdrrc2_config.startup()
+      
+    def Quit(self, e):
+        self.Destroy()      
                 
     def Settings(self, e):
         config = cf.ConfigParser()

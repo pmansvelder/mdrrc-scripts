@@ -5,6 +5,7 @@ import os
 class Settings(wx.Dialog):
     def __init__(self, settings, *args, **kwargs):
         wx.Dialog.__init__(self, *args, **kwargs)
+        self.SetTitle(_('Connection Settings'))
         self.settings = settings
         self.panel = wx.Panel(self)
         self.quote = wx.StaticText(self.panel, label = "Port settings:")
