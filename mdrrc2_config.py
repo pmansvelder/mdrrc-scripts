@@ -55,11 +55,7 @@ class ConfiglistFrame(wx.Frame, list):
         ID_SAVERESET = wx.NewId()        
         tb.AddLabelTool(id=ID_SAVERESET, label=_('Store config and reset'), bitmap=wx.Bitmap('/usr/share/icons/oxygen/48x48/actions/document-save-all.png'), longHelp=_('Store config and reset controller'))
         self.Bind(wx.EVT_TOOL, self.SaveAndReset, id=ID_SAVERESET)
-        
-        ID_SETTINGS = wx.NewId()
-        tb.AddLabelTool(id=ID_SETTINGS, label=_('Change Settings'), bitmap=wx.Bitmap('/usr/share/icons/oxygen/48x48/actions/configure.png'), longHelp=_('Change settings of program'))
-        self.Bind(wx.EVT_TOOL, self.Settings, id=ID_SETTINGS)
-        
+                
         tb.Realize()
 
         #Create an editor for the protocol selection
@@ -113,6 +109,9 @@ class ConfiglistFrame(wx.Frame, list):
 
         self.locgrid.Bind(wx.grid.EVT_GRID_EDITOR_HIDDEN,
               self.OnGrid1GridEditorHidden)
+              
+        self.Centre()
+        self.Show(True)
 
     #This method fires when a grid cell changes. We are simply showing
     #what has changed and any associated index and client data. Typically
@@ -265,17 +264,12 @@ def startup():
   config = cf.ConfigParser()
   config.read('settings.cfg')
   settings = [config.get('Connection', 'port').encode('ascii','ignore'), config.get('Connection', 'speed').encode('ascii','ignore')]
-  
-# Bug: Uncommenting this leads to not being able to close menu...
-#  app = wx.PySimpleApp()
 
   if mdrrc2serial.TestConnection():
+#    configList = {'MM locs only': 'True'}
     configList = mdrrc2serial.ReadConfig()
     if len(configList) > 0:
       frame = ConfiglistFrame(None, configList)
-      frame.Centre()
-      frame.Show(True)
-      app.MainLoop()
     else:
       Foutmelding(None, _('Centrale not in config mode!\nMake sure MDRRC-II controller is connected and set to config mode (SET->CON)...'))
   else:
@@ -283,5 +277,3 @@ def startup():
 
 if __name__ == '__main__':
   startup()
-
-

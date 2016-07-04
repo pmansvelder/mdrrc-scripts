@@ -13,7 +13,7 @@ gettext.install('mdrrc-editor')
 
 class MenuFrame(wx.Frame):
     def __init__(self, parent):
-        wx.Frame.__init__(self, parent, -1, _("MDRRC-II Editor"), size=(425, 175))
+        wx.Frame.__init__(self, parent, -1, _("MDRRC-II Config Menu"), size=(425, 175))
 
         # Read settings for config program
         config = cf.ConfigParser()
@@ -61,13 +61,14 @@ class MenuFrame(wx.Frame):
 
     def LocListEditor(self, e):
         mdrrc2_loclist.startup()
-        self.Destroy()
 
     def ConfigEditor(self, e):
         mdrrc2_config.startup()
-        self.Destroy()
-        
+                
     def Settings(self, e):
+        config = cf.ConfigParser()
+        config.read('settings.cfg')
+        self.settings = [config.get('Connection', 'port').encode('ascii','ignore'), config.get('Connection', 'speed').encode('ascii','ignore')]
         settings_dialog = mdrrcsettings.Settings(self.settings, self)
         res = settings_dialog.ShowModal()
         if res == wx.ID_OK:
@@ -80,11 +81,6 @@ def MenuWindow():
   frame.Centre()
   frame.Show(True)
   MenuApp.MainLoop()
-  
-# Read settings for config program
-config = cf.ConfigParser()
-config.read('settings.cfg')
-settings = [config.get('Connection', 'port').encode('ascii','ignore'), config.get('Connection', 'speed').encode('ascii','ignore')]
 
 MenuWindow()
 

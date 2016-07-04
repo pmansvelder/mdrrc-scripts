@@ -59,24 +59,30 @@ class LoclistFrame(wx.Frame, list):
         self.SetMenuBar(menuBar)  # Adding the MenuBar to the Frame content.
         
         # Create a toolbar
-        ID_NEWLOCO = wx.NewId()
-        ID_DELLOCO = wx.NewId()
-        ID_SAVE = wx.NewId()
-        ID_SAVERESET = wx.NewId()
-        ID_REFRESH = wx.NewId()
         tb = self.CreateToolBar()
-        tb.AddLabelTool(id=ID_NEWLOCO, label=_('New Loco'), bitmap=wx.Bitmap('/usr/share/icons/oxygen/48x48/actions/document-new.png'), longHelp=_('Add a new loco')) 
-        tb.AddLabelTool(id=ID_DELLOCO, label=_('Delete Loco'), bitmap=wx.Bitmap('/usr/share/icons/oxygen/48x48/actions/edit-delete.png'), longHelp=_('Delete an existing loco'))
-        tb.AddLabelTool(id=ID_SAVE, label=_('Store config'), bitmap=wx.Bitmap('/usr/share/icons/oxygen/48x48/actions/document-save.png'), longHelp=_('Store config on controller'))
-        tb.AddLabelTool(id=ID_SAVERESET, label=_('Store config and reset'), bitmap=wx.Bitmap('/usr/share/icons/oxygen/48x48/actions/document-save-all.png'), longHelp=_('Store config and reset controller'))
-        tb.AddLabelTool(id=ID_REFRESH, label=_('Refresh'), bitmap=wx.Bitmap('/usr/share/icons/oxygen/48x48/actions/view-refresh.png'), longHelp=_('Refresh listing'))
-        tb.Realize()
-        self.Bind(wx.EVT_TOOL, self.NewLoco, id=ID_NEWLOCO)
-        self.Bind(wx.EVT_TOOL, self.SaveOnly, id=ID_SAVE)
-        self.Bind(wx.EVT_TOOL, self.SaveAndReset, id=ID_SAVERESET)
-        self.Bind(wx.EVT_TOOL, self.DelLoc, id=ID_DELLOCO)
-        self.Bind(wx.EVT_TOOL, self.Refresh, id=ID_REFRESH)
         
+        ID_NEWLOCO = wx.NewId() 
+        tb.AddLabelTool(id=ID_NEWLOCO, label=_('New Loco'), bitmap=wx.Bitmap('/usr/share/icons/oxygen/48x48/actions/document-new.png'), longHelp=_('Add a new loco'))
+        self.Bind(wx.EVT_TOOL, self.NewLoco, id=ID_NEWLOCO)
+                
+        ID_DELLOCO = wx.NewId()
+        tb.AddLabelTool(id=ID_DELLOCO, label=_('Delete Loco'), bitmap=wx.Bitmap('/usr/share/icons/oxygen/48x48/actions/edit-delete.png'), longHelp=_('Delete an existing loco'))
+        self.Bind(wx.EVT_TOOL, self.DelLoc, id=ID_DELLOCO)
+        
+        ID_SAVE = wx.NewId()
+        tb.AddLabelTool(id=ID_SAVE, label=_('Store config'), bitmap=wx.Bitmap('/usr/share/icons/oxygen/48x48/actions/document-save.png'), longHelp=_('Store config on controller'))
+        self.Bind(wx.EVT_TOOL, self.SaveOnly, id=ID_SAVE)
+        
+        ID_SAVERESET = wx.NewId()
+        tb.AddLabelTool(id=ID_SAVERESET, label=_('Store config and reset'), bitmap=wx.Bitmap('/usr/share/icons/oxygen/48x48/actions/document-save-all.png'), longHelp=_('Store config and reset controller'))
+        self.Bind(wx.EVT_TOOL, self.SaveAndReset, id=ID_SAVERESET)
+        
+        ID_REFRESH = wx.NewId()
+        tb.AddLabelTool(id=ID_REFRESH, label=_('Refresh'), bitmap=wx.Bitmap('/usr/share/icons/oxygen/48x48/actions/view-refresh.png'), longHelp=_('Refresh listing'))
+        self.Bind(wx.EVT_TOOL, self.Refresh, id=ID_REFRESH)
+                
+        tb.Realize()
+
         #Create an editor for the protocol selection
         ProtocolEditor = wx.grid.GridCellChoiceEditor(['DCC','MM'], allowOthers=False)
 
@@ -116,9 +122,13 @@ class LoclistFrame(wx.Frame, list):
         self.locgrid.Bind(wx.grid.EVT_GRID_EDITOR_HIDDEN,
               self.OnGrid1GridEditorHidden)
 
-       # Selection
+        # Selection
         self.locgrid.Bind(wx.grid.EVT_GRID_SELECT_CELL, 
               self._OnSelectedCell )
+        
+        # Selfishly put yourself in the centre and show your stuff...      
+        self.Centre()
+        self.Show(True)
 
     def _OnSelectedCell( self, event ):
          """Internal update to the selection tracking list"""
@@ -158,7 +168,6 @@ class LoclistFrame(wx.Frame, list):
         CountLocs(listoflocs,sb)
         event.Skip()
  
-    
     #This method fires when the underlying GridCellChoiceEditor ComboBox
     #is done with a selection.
     def OnGrid1ComboBox(self, event):
@@ -369,17 +378,12 @@ def startup():
   config = cf.ConfigParser()
   config.read('settings.cfg')
   settings = [config.get('Connection', 'port').encode('ascii','ignore'), config.get('Connection', 'speed').encode('ascii','ignore')]
-  
-# Bug: Uncommenting this leads to not being able to close menu...
-#  app = wx.PySimpleApp()
-  
+  # Test connection: if yes, then try to read loc list
   if mdrrc2serial.TestConnection():
     loclist = mdrrc2serial.ParseLocList()
+    # If loc list contains locs, then open the editor
     if len(loclist) > 0:
       frame = LoclistFrame(None, loclist)
-      frame.Centre()
-      frame.Show(True)
-      app.MainLoop()
     else:
       Foutmelding(None, _('Centrale not in config mode or not connected!\nMake sure MDRRC-II controller is connected and set to config mode (SET->CON)...'))
   else:
