@@ -1,13 +1,15 @@
 #!/usr/bin/python
 
-import mdrrc2serial
 import copy
 import wx
 import wx.grid
 import gettext
-import mdrrcsettings
 import ConfigParser as cf
 import os
+import csv
+
+# Internal modules for mdrrc
+import mdrrc2serial,mdrrcsettings
 
 # Language suppport
 gettext.install('mdrrc-editor')
@@ -19,7 +21,7 @@ class ConfiglistFrame(wx.Frame, list):
         # Read settings for config program
         config = cf.ConfigParser()
         config.read('settings.cfg')
-        self.settings = [config.get('Connection', 'port').encode('ascii','ignore'), config.get('Connection', 'speed').encode('ascii','ignore')]
+        self.settings = [config.get('Connection', 'port').encode('ascii','ignore'), config.get('Connection', 'speed').encode('ascii','ignore'), config.get('Export','filename').encode('ascii','ignore'), config.get('Export','configfilename').encode('ascii','ignore')]
 
         # A statusbar
         self.CreateStatusBar()
@@ -49,13 +51,18 @@ class ConfiglistFrame(wx.Frame, list):
         tb = self.CreateToolBar()
         
         ID_SAVE = wx.NewId()
-        tb.AddLabelTool(id=ID_SAVE, label=_('Store config'), bitmap=wx.Bitmap('/usr/share/icons/oxygen/48x48/actions/document-save.png'), longHelp='Store config on controller')
+        tb.AddLabelTool(id=ID_SAVE, label=_('Store config'), bitmap=wx.Bitmap('/usr/share/icons/oxygen/48x48/actions/document-save.png'), longHelp=_('Store config on controller'))
         self.Bind(wx.EVT_TOOL, self.SaveOnly, id=ID_SAVE)
         
         ID_SAVERESET = wx.NewId()        
         tb.AddLabelTool(id=ID_SAVERESET, label=_('Store config and reset'), bitmap=wx.Bitmap('/usr/share/icons/oxygen/48x48/actions/document-save-all.png'), longHelp=_('Store config and reset controller'))
         self.Bind(wx.EVT_TOOL, self.SaveAndReset, id=ID_SAVERESET)
-                
+
+        
+        ID_EXPORT = wx.NewId()
+        tb.AddLabelTool(id=ID_EXPORT, label=_('Export'), bitmap=wx.Bitmap('/usr/share/icons/oxygen/48x48/actions/view-refresh.png'), longHelp=_('Export config'))
+        self.Bind(wx.EVT_TOOL, self.Export, id=ID_EXPORT)
+     
         tb.Realize()
 
         #Create an editor for the protocol selection
@@ -133,7 +140,6 @@ class ConfiglistFrame(wx.Frame, list):
         mdrrc2serial.ChangeConfig(key, NewValue, configList)
         event.Skip()
  
-    
     #This method fires when the underlying GridCellChoiceEditor ComboBox
     #is done with a selection.
     def OnGrid1ComboBox(self, event):
@@ -156,7 +162,6 @@ class ConfiglistFrame(wx.Frame, list):
         #that later, once all of the text has been entered.
         self.locgrid.index = self.comboBox.GetSelection()
         event.Skip()
-
 
     #This method fires after editing is finished for any cell. At this point
     #we know that any added text is complete, if there is any.
@@ -226,13 +231,15 @@ class ConfiglistFrame(wx.Frame, list):
     def SaveOnly(self, e):
         mdrrc2serial.StoreConfig()
         self.Destroy()
-        
-    def Settings(self, e):
-        settings_dialog = mdrrcsettings.Settings(self.settings, self)
-        res = settings_dialog.ShowModal()
-        if res == wx.ID_OK:
-            self.settings = settings_dialog.GetSettings()
-        settings_dialog.Destroy()
+
+    def Export(self, e):
+        csvfile = self.settings[3]
+        with open(csvfile, "w") as output:
+                writer = csv.writer(output, lineterminator='\n')
+                writer.writerow([_('Parameter'), _('Value')])
+                for c in configList:
+                        writer.writerow([c]+[configList[c]])
+        self.Destroy()
 
 def Foutmelding(parent, message, caption = _('MDRRC-II config editor: Error!')):
   dlg = wx.MessageDialog(parent, message, caption, wx.OK | wx.ICON_WARNING)
@@ -243,9 +250,8 @@ def startup():
   # Read settings for config program
   config = cf.ConfigParser()
   config.read('settings.cfg')
-  settings = [config.get('Connection', 'port').encode('ascii','ignore'), config.get('Connection', 'speed').encode('ascii','ignore')]
+  settings = [config.get('Connection', 'port').encode('ascii','ignore'), config.get('Connection', 'speed').encode('ascii','ignore'), config.get('Export','filename').encode('ascii','ignore'), config.get('Export','configfilename').encode('ascii','ignore')]
   if mdrrc2serial.TestConnection():
-#    configList = {'MM locs only': 'True'}
     global configList
     configList = mdrrc2serial.ReadConfig()
 

@@ -79,9 +79,9 @@ class LoclistFrame(wx.Frame, list):
         tb.AddLabelTool(id=ID_SAVERESET, label=_('Store config and reset'), bitmap=wx.Bitmap('/usr/share/icons/oxygen/48x48/actions/document-save-all.png'), longHelp=_('Store config and reset controller'))
         self.Bind(wx.EVT_TOOL, self.SaveAndReset, id=ID_SAVERESET)
         
-        ID_REFRESH = wx.NewId()
-        tb.AddLabelTool(id=ID_REFRESH, label=_('Refresh'), bitmap=wx.Bitmap('/usr/share/icons/oxygen/48x48/actions/view-refresh.png'), longHelp=_('Refresh listing'))
-        self.Bind(wx.EVT_TOOL, self.Refresh, id=ID_REFRESH)
+        ID_EXPORT = wx.NewId()
+        tb.AddLabelTool(id=ID_EXPORT, label=_('Export'), bitmap=wx.Bitmap('/usr/share/icons/oxygen/48x48/actions/view-refresh.png'), longHelp=_('Export listing'))
+        self.Bind(wx.EVT_TOOL, self.Export, id=ID_EXPORT)
                 
         tb.Realize()
 
@@ -258,10 +258,11 @@ class LoclistFrame(wx.Frame, list):
         mdrrc2serial.StopConfig()
         self.Destroy()
         
-    def Refresh(self, e):
+    def Export(self, e):
         csvfile = self.settings[2]
         with open(csvfile, "w") as output:
                 writer = csv.writer(output, lineterminator='\n')
+                writer.writerow([_('Adress'), _('Name'), _('Protocol')])
                 for l in listoflocs:
                         writer.writerow([l]+listoflocs[l])
         self.Destroy()
@@ -271,7 +272,7 @@ class LoclistFrame(wx.Frame, list):
             title=_('New Loco Address'))
         chgdep.ShowModal()
         chgdep.Destroy()
-        self.Destroy()
+#        self.Destroy()
 
     def DelLoc(self, event):
         try: 

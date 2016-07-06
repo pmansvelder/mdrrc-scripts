@@ -33,53 +33,53 @@ msgstr "Verwijder een lok uit de lijst"
 
 #: locgrid.py:37
 msgid " Save and reboot"
-msgstr ""
+msgstr "Bewaar en herstart"
 
 #: locgrid.py:40
 msgid " Save without reboot"
-msgstr ""
+msgstr "Bewaar wijzigingen"
 
 #: locgrid.py:44
 msgid " Terminate the program"
-msgstr ""
+msgstr "Stop programma"
 
 #: locgrid.py:59
 msgid "Add a new loco"
-msgstr ""
+msgstr "Voeg een nieuw lok toe"
 
 #: locgrid.py:59
 msgid "New Loco"
-msgstr ""
+msgstr "Nieuwe Lok"
 
 #: locgrid.py:60
 msgid "Delete Loco"
-msgstr ""
+msgstr "Verwijder Lok"
 
 #: locgrid.py:60
 msgid "Delete an existing loco"
-msgstr ""
+msgstr "Verwijder een bestaande lok"
 
 #: locgrid.py:61
 msgid "Store config"
-msgstr ""
+msgstr "Bewaar configuratie"
 
 #: locgrid.py:61
 msgid "Store config on controller"
-msgstr ""
+msgstr "Bewaar configuratie op controller"
 
 #: locgrid.py:62
 msgid "Store config and reset"
-msgstr ""
+msgstr "Bewaar config en herstart"
 
 #: locgrid.py:62
 msgid "Store config and reset controller"
-msgstr ""
+msgstr "Bewaar config en herstart controller"
 
 #: locgrid.py:63
 msgid "Refresh"
-msgstr ""
+msgstr "Ververs"
 
 #: locgrid.py:63
 msgid "Refresh listing"
-msgstr ""
+msgstr "Ververs lijst"
 

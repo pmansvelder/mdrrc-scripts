@@ -18,7 +18,7 @@ class MenuFrame(wx.Frame):
         # Read settings for config program
         config = cf.ConfigParser()
         config.read('settings.cfg')
-        self.settings = [config.get('Connection', 'port').encode('ascii','ignore'), config.get('Connection', 'speed').encode('ascii','ignore'), config.get('Export','filename').encode('ascii','ignore')]
+        self.settings = [config.get('Connection', 'port').encode('ascii','ignore'), config.get('Connection', 'speed').encode('ascii','ignore'), config.get('Export','filename').encode('ascii','ignore'), config.get('Export','configfilename').encode('ascii','ignore')]
 
         # A statusbar
         self.CreateStatusBar()
@@ -43,7 +43,7 @@ class MenuFrame(wx.Frame):
         tb = self.CreateToolBar()
         
         ID_CONFIGEDIT = wx.NewId()
-        tb.AddLabelTool(id=ID_CONFIGEDIT, label=_('Config Editor'), bitmap=wx.Bitmap('config.png'), longHelp='Open configuration Editor')
+        tb.AddLabelTool(id=ID_CONFIGEDIT, label=_('Config Editor'), bitmap=wx.Bitmap('config.png'), longHelp=_('Open configuration Editor'))
         self.Bind(wx.EVT_TOOL, self.ConfigEditor, id=ID_CONFIGEDIT)
         
         ID_LOCLIST = wx.NewId()
@@ -74,7 +74,7 @@ class MenuFrame(wx.Frame):
     def Settings(self, e):
         config = cf.ConfigParser()
         config.read('settings.cfg')
-        self.settings = [config.get('Connection', 'port').encode('ascii','ignore'), config.get('Connection', 'speed').encode('ascii','ignore'), config.get('Export','filename').encode('ascii','ignore')]
+        self.settings = [config.get('Connection', 'port').encode('ascii','ignore'), config.get('Connection', 'speed').encode('ascii','ignore'), config.get('Export','filename').encode('ascii','ignore'), config.get('Export','configfilename').encode('ascii','ignore')]
         settings_dialog = mdrrcsettings.Settings(self.settings, self)
         res = settings_dialog.ShowModal()
         if res == wx.ID_OK:

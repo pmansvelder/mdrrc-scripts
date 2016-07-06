@@ -27,6 +27,10 @@ class Settings(wx.Dialog):
         self.fileedit = wx.TextCtrl(self.panel, size=(140, -1))
         self.fileedit.SetValue(self.settings[2])
 
+        self.configfilelabel =  wx.StaticText(self.panel, label=_("Config filename:"))
+        self.configfileedit = wx.TextCtrl(self.panel, size=(140, -1))
+        self.configfileedit.SetValue(self.settings[3])
+
         self.windowSizer = wx.BoxSizer()
         self.windowSizer.Add(self.panel, 1, wx.ALL | wx.EXPAND)  
 
@@ -37,11 +41,12 @@ class Settings(wx.Dialog):
         self.sizer.Add(self.portedit, (1, 1))
         self.sizer.Add(self.baudlabel, (2, 0))
         self.sizer.Add(self.baudedit, (2, 1))
-        self.sizer.Add(wx.StaticLine(self), (3,0))
         self.sizer.Add(self.exportlabel, (4,0))
         self.sizer.Add(self.filelabel, (5,0))
-        self.sizer.Add(self.fileedit, (5,1))       
-        self.sizer.Add(self.button, (6, 0), (1, 2), flag=wx.EXPAND)
+        self.sizer.Add(self.fileedit, (5,1))
+        self.sizer.Add(self.configfilelabel, (6,0))
+        self.sizer.Add(self.configfileedit, (6,1))    
+        self.sizer.Add(self.button, (7, 0), (1, 2), flag=wx.EXPAND)
         
         self.border = wx.BoxSizer()
         self.border.Add(self.sizer, 1, wx.ALL | wx.EXPAND, 5)
@@ -56,16 +61,18 @@ class Settings(wx.Dialog):
         self.settings[0] = self.portedit.GetValue().encode('ascii','ignore')
         self.settings[1] = self.baudedit.GetValue().encode('ascii','ignore')
         self.settings[2] = self.fileedit.GetValue().encode('ascii','ignore')
+        self.settings[3] = self.configfileedit.GetValue().encode('ascii','ignore')
         config = cf.ConfigParser()
         config.read('settings.cfg')
         config.set('Connection','port', self.settings[0])
         config.set('Connection','speed', self.settings[1])
         config.set('Export','filename', self.settings[2])
+        config.set('Export','configfilename', self.settings[3])
         with open('settings.cfg', 'wb') as configfile:
           config.write(configfile)
         self.EndModal(wx.ID_OK)
 
     def GetSettings(self):
         return self.settings
-
-#
+        self.sizer.Add(self.filelabel, (5,0))
+        self.sizer.Add(self.fileedit, (5,1))    
