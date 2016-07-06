@@ -48,6 +48,14 @@ def AddLoco(address):
     ser.close()
     return message
 
+def RemoveLoco(address):
+  (mdrrc2_port,mdrrc2_baud) = ReadConfigParams()
+  with serial.Serial(port=mdrrc2_port,baudrate=mdrrc2_baud, timeout=1) as ser:
+    ser.write('LOCDEL '+str(address)+'\r')
+    message = ser.read(255)
+    ser.close()
+    return message
+
 def StopConfig():
   (mdrrc2_port,mdrrc2_baud) = ReadConfigParams()
   with serial.Serial(port=mdrrc2_port,baudrate=mdrrc2_baud, timeout=1) as ser:

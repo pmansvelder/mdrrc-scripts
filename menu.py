@@ -18,7 +18,7 @@ class MenuFrame(wx.Frame):
         # Read settings for config program
         config = cf.ConfigParser()
         config.read('settings.cfg')
-        self.settings = [config.get('Connection', 'port').encode('ascii','ignore'), config.get('Connection', 'speed').encode('ascii','ignore')]
+        self.settings = [config.get('Connection', 'port').encode('ascii','ignore'), config.get('Connection', 'speed').encode('ascii','ignore'), config.get('Export','filename').encode('ascii','ignore')]
 
         # A statusbar
         self.CreateStatusBar()
@@ -74,7 +74,7 @@ class MenuFrame(wx.Frame):
     def Settings(self, e):
         config = cf.ConfigParser()
         config.read('settings.cfg')
-        self.settings = [config.get('Connection', 'port').encode('ascii','ignore'), config.get('Connection', 'speed').encode('ascii','ignore')]
+        self.settings = [config.get('Connection', 'port').encode('ascii','ignore'), config.get('Connection', 'speed').encode('ascii','ignore'), config.get('Export','filename').encode('ascii','ignore')]
         settings_dialog = mdrrcsettings.Settings(self.settings, self)
         res = settings_dialog.ShowModal()
         if res == wx.ID_OK:

@@ -2,24 +2,26 @@
 
 import wx
 import wx.grid
-import mdrrc2serial
 import copy
 import gettext
-import mdrrcsettings
 import ConfigParser as cf
 import os
+import csv
+
+# Internal modules for mdrrc
+import mdrrc2serial,mdrrcsettings
 
 # Language suppport
 gettext.install('mdrrc-editor')
 
 class LoclistFrame(wx.Frame, list):
     def __init__(self, parent, list):
-        wx.Frame.__init__(self, parent, -1, _("MDRRC-II Loc Editor"), size=(350, 1300))
+        wx.Frame.__init__(self, parent, -1, _("MDRRC-II Loc Editor"), size=(330, 1300))
 
         # Read settings for config program
         config = cf.ConfigParser()
         config.read('settings.cfg')
-        self.settings = [config.get('Connection', 'port').encode('ascii','ignore'), config.get('Connection', 'speed').encode('ascii','ignore')]
+        self.settings = [config.get('Connection', 'port').encode('ascii','ignore'), config.get('Connection', 'speed').encode('ascii','ignore'), config.get('Export','filename').encode('ascii','ignore')]
         
         global selected_address
         
@@ -88,7 +90,7 @@ class LoclistFrame(wx.Frame, list):
 
         # Determine size of grid
         NumberOfLines = len(list)
-        NumberOfRows = len(list[1])+1
+        NumberOfRows = len(list[1])+1           
 
         # Create grid
         self.locgrid = wx.grid.Grid(id=-1, name='locgrid',
@@ -108,6 +110,8 @@ class LoclistFrame(wx.Frame, list):
 
         global listoflocs
         listoflocs = list
+        
+        self.locgrid.SetRowLabelSize(0)
 
 	# Experimental part: handling selection
         self.locgrid.data = None
@@ -135,7 +139,8 @@ class LoclistFrame(wx.Frame, list):
          global selected_address
          cursor = [ event.GetRow() ]
          selected_address = self.locgrid.GetCellValue(int(cursor[0]),0)
-         UpdateStatus('Selected loco = '+str(selected_address))
+         selected_name = self.locgrid.GetCellValue(int(cursor[0]),1)
+         UpdateStatus('Selected loco = '+str(selected_address)+' ('+selected_name.strip()+')')
          event.Skip()
 
     #This method fires when a grid cell changes. We are simply showing
@@ -236,10 +241,6 @@ class LoclistFrame(wx.Frame, list):
             #Bind the ComboBox events.
             self.comboBox.Bind(wx.EVT_COMBOBOX, self.OnGrid1ComboBox)
             self.comboBox.Bind(wx.EVT_TEXT, self.OnGrid1ComboBoxText)
-            
-            #Load the initial choice list.
-            for (item, data) in self.locgrid.list:
-                self.comboBox.Append(item, data)
         
         event.Skip()
 
@@ -249,28 +250,43 @@ class LoclistFrame(wx.Frame, list):
         dlg.ShowModal() # Show it
         dlg.Destroy() # finally destroy it when finished.
 
+    def SaveOnly(self, e):
+        mdrrc2serial.StoreConfig()
+        self.Destroy()
+ 
     def SaveAndReset(self, e):
         mdrrc2serial.StopConfig()
+        self.Destroy()
+        
+    def Refresh(self, e):
+        csvfile = self.settings[2]
+        with open(csvfile, "w") as output:
+                writer = csv.writer(output, lineterminator='\n')
+                for l in listoflocs:
+                        writer.writerow([l]+listoflocs[l])
         self.Destroy()
 
     def NewLoco(self, e):
         chgdep = NewLocoDialog(None, 
             title=_('New Loco Address'))
         chgdep.ShowModal()
-        chgdep.Destroy()  
-
-    def DelLoc(self, e):
-        BuildLocoGrid(listoflocs,self.locgrid)
-
-    def SaveOnly(self, e):
-        mdrrc2serial.StoreConfig()
+        chgdep.Destroy()
         self.Destroy()
-        
-    def SaveOnly(self, e):
-        wx.Yield()
-        BuildLocoGrid(list, self.locgrid)
-        
-  
+
+    def DelLoc(self, event):
+        try: 
+                dlg = wx.MessageDialog(self, _("Do you really want to delete loco ")+str(selected_address)+" ?",
+                _("Klik OK to confirm"), wx.OK|wx.CANCEL|wx.ICON_QUESTION)
+                result = dlg.ShowModal()
+                dlg.Destroy()
+                if result == wx.ID_OK:
+                        mdrrc2serial.RemoveLoco(selected_address)
+                        self.Destroy()
+        except: 
+                dlg = wx.MessageDialog(self, _("No loco selected!"),_("Error"), wx.OK|wx.ICON_WARNING)
+                result = dlg.ShowModal()
+                dlg.Destroy()
+
 class NewLocoDialog(wx.Dialog):
     
     def __init__(self, *args, **kw):
