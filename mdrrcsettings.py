@@ -76,3 +76,9 @@ class Settings(wx.Dialog):
         return self.settings
         self.sizer.Add(self.filelabel, (5,0))
         self.sizer.Add(self.fileedit, (5,1))    
+        
+def ReadConfig(self):
+        config = cf.ConfigParser()
+        config.read('settings.cfg')
+        settings = [config.get('Connection', 'port').encode('ascii','ignore'), config.get('Connection', 'speed').encode('ascii','ignore'), config.get('Export','filename').encode('ascii','ignore'), config.get('Export','configfilename').encode('ascii','ignore')]
+        return settings

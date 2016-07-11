@@ -19,9 +19,7 @@ class ConfiglistFrame(wx.Frame, list):
         wx.Frame.__init__(self, parent, -1, _("MDRRC-II Config List"), size=(310, 465))
 
         # Read settings for config program
-        config = cf.ConfigParser()
-        config.read('settings.cfg')
-        self.settings = [config.get('Connection', 'port').encode('ascii','ignore'), config.get('Connection', 'speed').encode('ascii','ignore'), config.get('Export','filename').encode('ascii','ignore'), config.get('Export','configfilename').encode('ascii','ignore')]
+        self.settings = mdrrcsettings.ReadConfig(None)
 
         # A statusbar
         self.CreateStatusBar()
@@ -248,9 +246,7 @@ def Foutmelding(parent, message, caption = _('MDRRC-II config editor: Error!')):
 
 def startup():
   # Read settings for config program
-  config = cf.ConfigParser()
-  config.read('settings.cfg')
-  settings = [config.get('Connection', 'port').encode('ascii','ignore'), config.get('Connection', 'speed').encode('ascii','ignore'), config.get('Export','filename').encode('ascii','ignore'), config.get('Export','configfilename').encode('ascii','ignore')]
+  settings = mdrrcsettings.ReadConfig(None)
   if mdrrc2serial.TestConnection():
     global configList
     configList = mdrrc2serial.ReadConfig()

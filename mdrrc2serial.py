@@ -39,7 +39,7 @@ def ChangeLocType(address):
   with serial.Serial(port=mdrrc2_port,baudrate=mdrrc2_baud, timeout=1) as ser:
     ser.write('LOCTYPE '+str(address)+'\r')
     ser.close()
-    
+
 def AddLoco(address):
   (mdrrc2_port,mdrrc2_baud) = ReadConfigParams()
   with serial.Serial(port=mdrrc2_port,baudrate=mdrrc2_baud, timeout=1) as ser:

@@ -16,12 +16,10 @@ gettext.install('mdrrc-editor')
 
 class LoclistFrame(wx.Frame, list):
     def __init__(self, parent, list):
-        wx.Frame.__init__(self, parent, -1, _("MDRRC-II Loc Editor"), size=(330, 1300))
+        wx.Frame.__init__(self, parent, -1, _("MDRRC-II Loc Editor"), size=(430, 1300))
 
         # Read settings for config program
-        config = cf.ConfigParser()
-        config.read('settings.cfg')
-        self.settings = [config.get('Connection', 'port').encode('ascii','ignore'), config.get('Connection', 'speed').encode('ascii','ignore'), config.get('Export','filename').encode('ascii','ignore')]
+        self.settings = mdrrcsettings.ReadConfig(None)
         
         global selected_address
         
@@ -80,8 +78,16 @@ class LoclistFrame(wx.Frame, list):
         self.Bind(wx.EVT_TOOL, self.SaveAndReset, id=ID_SAVERESET)
         
         ID_EXPORT = wx.NewId()
-        tb.AddLabelTool(id=ID_EXPORT, label=_('Export'), bitmap=wx.Bitmap('/usr/share/icons/oxygen/48x48/actions/view-refresh.png'), longHelp=_('Export listing'))
+        tb.AddLabelTool(id=ID_EXPORT, label=_('Export'), bitmap=wx.Bitmap('/usr/share/icons/oxygen/48x48/actions/document-export.png'), longHelp=_('Export loco listing'))
         self.Bind(wx.EVT_TOOL, self.Export, id=ID_EXPORT)
+        
+        ID_IMPORT = wx.NewId()
+        tb.AddLabelTool(id=ID_IMPORT, label=_('Import'), bitmap=wx.Bitmap('/usr/share/icons/oxygen/48x48/actions/document-import.png'), longHelp=_('Import loco listing'))
+        self.Bind(wx.EVT_TOOL, self.Import, id=ID_IMPORT)
+        
+        ID_PURGE = wx.NewId()
+        tb.AddLabelTool(id=ID_PURGE, label=_('Purge'), bitmap=wx.Bitmap('/usr/share/icons/oxygen/48x48/actions/edit-bomb.png'), longHelp=_('Purge list'))
+        self.Bind(wx.EVT_TOOL, self.Purge, id=ID_PURGE)
                 
         tb.Realize()
 
@@ -90,11 +96,10 @@ class LoclistFrame(wx.Frame, list):
 
         # Determine size of grid
         NumberOfLines = len(list)
-        NumberOfRows = len(list[1])+1           
+        NumberOfRows = len(next(list.itervalues()))+1           
 
         # Create grid
-        self.locgrid = wx.grid.Grid(id=-1, name='locgrid',
-              parent=self, pos=wx.Point(0, 0), style=0)
+        self.locgrid = wx.grid.Grid(id=-1, name='locgrid', parent=self, pos=wx.Point(0, 0), style=0)
         self.locgrid.CreateGrid(NumberOfLines, NumberOfRows)
 
         # Set headers for columns
@@ -266,13 +271,59 @@ class LoclistFrame(wx.Frame, list):
                 for l in listoflocs:
                         writer.writerow([l]+listoflocs[l])
         self.Destroy()
+        
+    def Purge(self, e):
+        dlg = wx.MessageDialog(self, _("Do you really want to delete all locos (only loco 1 will remain) ?"),
+        _("Klik OK to confirm"), wx.OK|wx.CANCEL|wx.ICON_QUESTION)
+        result = dlg.ShowModal()
+        dlg.Destroy()
+        if result == wx.ID_OK:
+                progressMax = len(listoflocs)
+                dialog = wx.ProgressDialog(_("Removing ")+str(progressMax)+_(" locos..."), _("Time remaining"), progressMax, style=wx.PD_APP_MODAL | wx.PD_ELAPSED_TIME | wx.PD_REMAINING_TIME | wx.PD_AUTO_HIDE)
+                count = 0
+                for l in listoflocs:
+                        count += 1
+                        if l != 1:
+                                dialog.title = _("removing loco ")+str(l)
+                                mdrrc2serial.RemoveLoco(l)  
+                        dialog.Update(count)
+                mdrrc2serial.ChangeLocName(1,"TEST")
+                dialog.Destroy()
+                self.Destroy()
+
+    def Import(self, e):
+        wildcard = "Comma-separated file (*.csv)|*.csv|"
+        dialog = wx.FileDialog(None, _("Choose a file"), os.getcwd(), "", wildcard, wx.OPEN)
+        if dialog.ShowModal() == wx.ID_OK:
+                csvfile = dialog.GetPath()
+        f = open(csvfile,"r")
+        reader = csv.reader(f, delimiter = ",")
+        data = [l for l in reader]
+        progressMax = len(data)
+        if progressMax > 0:
+                with open(csvfile, 'rb') as input:
+                        reader = csv.DictReader(input)
+                        dialog = wx.ProgressDialog(_("Importing ")+str(progressMax)+_(" locos..."), _("Time remaining"), progressMax, style=wx.PD_APP_MODAL | wx.PD_ELAPSED_TIME | wx.PD_REMAINING_TIME | wx.PD_AUTO_HIDE)    
+                        count = 0
+                        for row in reader:
+                                count += 1
+                                mdrrc2serial.AddLoco(row[_('Adress')])
+                                mdrrc2serial.ChangeLocName(row[_('Adress')],row[_('Name')])
+                                if mdrrc2serial.ParseLocList()[int(row[_('Adress')])][1] != row[_('Protocol')]:
+                                        mdrrc2serial.ChangeLocType(row[_('Adress')])
+                                dialog.Update(count)
+                dialog.Destroy()
+        else:
+               dlg = wx.MessageDialog( self, _("No locos found in file."), _("Error"), wx.OK)
+               dlg.ShowModal() # Show it 
+        self.Destroy()
 
     def NewLoco(self, e):
         chgdep = NewLocoDialog(None, 
             title=_('New Loco Address'))
         chgdep.ShowModal()
         chgdep.Destroy()
-#        self.Destroy()
+        self.Destroy()
 
     def DelLoc(self, event):
         try: 
@@ -370,9 +421,7 @@ def Foutmelding(parent, message, caption = _('MDRRC-II loc editor: Error!')):
 
 def startup():
   # Read settings for config program
-  config = cf.ConfigParser()
-  config.read('settings.cfg')
-  settings = [config.get('Connection', 'port').encode('ascii','ignore'), config.get('Connection', 'speed').encode('ascii','ignore')]
+  settings = mdrrcsettings.ReadConfig(None)
   # Test connection: if yes, then try to read loc list
   if mdrrc2serial.TestConnection():
     loclist = mdrrc2serial.ParseLocList()
