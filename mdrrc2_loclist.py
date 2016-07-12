@@ -307,11 +307,16 @@ class LoclistFrame(wx.Frame, list):
                         count = 0
                         for row in reader:
                                 count += 1
-                                mdrrc2serial.AddLoco(row[_('Adress')])
-                                mdrrc2serial.ChangeLocName(row[_('Adress')],row[_('Name')])
-                                if mdrrc2serial.ParseLocList()[int(row[_('Adress')])][1] != row[_('Protocol')]:
-                                        mdrrc2serial.ChangeLocType(row[_('Adress')])
-                                dialog.Update(count)
+                                try:
+                                        mdrrc2serial.AddLoco(row[_('Adress')])
+                                        mdrrc2serial.ChangeLocName(row[_('Adress')],row[_('Name')])
+                                        if mdrrc2serial.ParseLocList()[int(row[_('Adress')])][1] != row[_('Protocol')]:
+                                                mdrrc2serial.ChangeLocType(row[_('Adress')])
+                                        dialog.Update(count)
+                                except:
+                                        dlg = wx.MessageDialog(self, _("Invalid csv file!"),_("Error"), wx.OK|wx.ICON_WARNING)
+                                        result = dlg.ShowModal()
+                                        break
                 dialog.Destroy()
         else:
                dlg = wx.MessageDialog( self, _("No locos found in file."), _("Error"), wx.OK)
