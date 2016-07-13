@@ -16,7 +16,7 @@ gettext.install('mdrrc-editor')
 
 class LoclistFrame(wx.Frame, list):
     def __init__(self, parent, list):
-        wx.Frame.__init__(self, parent, -1, _("MDRRC-II Loc Editor"), size=(430, 1300))
+        wx.Frame.__init__(self, parent, -1, _("MDRRC-II Loc Editor"), size=(430, 800))
 
         # Read settings for config program
         self.settings = mdrrcsettings.ReadConfig(None)
@@ -79,7 +79,7 @@ class LoclistFrame(wx.Frame, list):
         
         ID_EXPORT = wx.NewId()
         tb.AddLabelTool(id=ID_EXPORT, label=_('Export'), bitmap=wx.Bitmap('document-export.png'), longHelp=_('Export loco listing'))
-        self.Bind(wx.EVT_TOOL, self.Export, id=ID_EXPORT)
+        self.Bind(wx.EVT_TOOL, self.ExportSave, id=ID_EXPORT)
         
         ID_IMPORT = wx.NewId()
         tb.AddLabelTool(id=ID_IMPORT, label=_('Import'), bitmap=wx.Bitmap('document-import.png'), longHelp=_('Import loco listing'))
@@ -145,7 +145,7 @@ class LoclistFrame(wx.Frame, list):
          cursor = [ event.GetRow() ]
          selected_address = self.locgrid.GetCellValue(int(cursor[0]),0)
          selected_name = self.locgrid.GetCellValue(int(cursor[0]),1)
-         UpdateStatus('Selected loco = '+str(selected_address)+' ('+selected_name.strip()+')')
+         UpdateStatus(_('Selected loco = ')+str(selected_address)+' ('+selected_name.strip()+')')
          event.Skip()
 
     #This method fires when a grid cell changes. We are simply showing
@@ -263,14 +263,20 @@ class LoclistFrame(wx.Frame, list):
         mdrrc2serial.StopConfig()
         self.Destroy()
         
-    def Export(self, e):
-        csvfile = self.settings[2]
-        with open(csvfile, "w") as output:
+    def ExportSave(self, e):
+        dlg = wx.FileDialog(self, _("Choose a file"), '', self.settings[2], "*.csv", wx.SAVE | wx.OVERWRITE_PROMPT)
+        if dlg.ShowModal() == wx.ID_OK:
+            # Open the file for write, write, close
+            csvfile=dlg.GetFilename()
+            self.dirname=dlg.GetDirectory()
+            with open(os.path.join(self.dirname, csvfile), "w") as output:
                 writer = csv.writer(output, lineterminator='\n')
                 writer.writerow([_('Adress'), _('Name'), _('Protocol')])
                 for l in listoflocs:
                         writer.writerow([l]+listoflocs[l])
-        self.Destroy()
+        # Get rid of the dialog to keep things tidy
+        dlg.Destroy()
+        UpdateStatus(_('Loclist exported to ')+os.path.join(self.dirname, csvfile))
         
     def Purge(self, e):
         dlg = wx.MessageDialog(self, _("Do you really want to delete all locos (only loco 1 will remain) ?"),

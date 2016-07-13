@@ -18,11 +18,16 @@ class ConfiglistFrame(wx.Frame, list):
     def __init__(self, parent, list):
         wx.Frame.__init__(self, parent, -1, _("MDRRC-II Config List"), size=(310, 465))
 
+        self.sizer = wx.BoxSizer(wx.VERTICAL)
+        self.gridPnl = wx.Panel(self)
+        self.gridPnlSizer = wx.BoxSizer(wx.VERTICAL)
+        
         # Read settings for config program
         self.settings = mdrrcsettings.ReadConfig(None)
 
         # A statusbar
-        self.CreateStatusBar()
+        global sb
+        sb = self.CreateStatusBar()
 
 	# A menubar
         filemenu= wx.Menu()
@@ -55,11 +60,14 @@ class ConfiglistFrame(wx.Frame, list):
         ID_SAVERESET = wx.NewId()        
         tb.AddLabelTool(id=ID_SAVERESET, label=_('Store config and reset'), bitmap=wx.Bitmap('document-save-all.png'), longHelp=_('Store config and reset controller'))
         self.Bind(wx.EVT_TOOL, self.SaveAndReset, id=ID_SAVERESET)
-
-        
+     
         ID_EXPORT = wx.NewId()
-        tb.AddLabelTool(id=ID_EXPORT, label=_('Export'), bitmap=wx.Bitmap('view-refresh.png'), longHelp=_('Export config'))
-        self.Bind(wx.EVT_TOOL, self.Export, id=ID_EXPORT)
+        tb.AddLabelTool(id=ID_EXPORT, label=_('Export'), bitmap=wx.Bitmap('document-export.png'), longHelp=_('Export config'))
+        self.Bind(wx.EVT_TOOL, self.ExportSave, id=ID_EXPORT)
+
+        ID_IMPORT = wx.NewId()
+        tb.AddLabelTool(id=ID_IMPORT, label=_('Import'), bitmap=wx.Bitmap('document-import.png'), longHelp=_('Import config'))
+        self.Bind(wx.EVT_TOOL, self.Import, id=ID_IMPORT)
      
         tb.Realize()
 
@@ -114,6 +122,18 @@ class ConfiglistFrame(wx.Frame, list):
 
         self.locgrid.Bind(wx.grid.EVT_GRID_EDITOR_HIDDEN,
               self.OnGrid1GridEditorHidden)
+
+        # Some magic to make grid stay in the middle
+        self.gridPnl.SetAutoLayout(True )
+        self.gridPnl.SetSizer(self.gridPnlSizer)
+        self.gridPnlSizer.Fit(self.gridPnl)
+         
+        self.gridPnlSizer.Add(self.locgrid,flag=wx.ALIGN_CENTER_HORIZONTAL)
+        self.sizer.Add(self.gridPnl,-1,wx.EXPAND)
+ 
+        self.SetAutoLayout(True)
+        self.SetSizer(self.sizer)
+        self.sizer.Fit(self) 
               
         self.Centre()
         self.Show(True)
@@ -228,21 +248,61 @@ class ConfiglistFrame(wx.Frame, list):
 
     def SaveOnly(self, e):
         mdrrc2serial.StoreConfig()
+        UpdateStatus(_('Config saved to controller'))
+ 
+    def Import(self, e):
+        wildcard = "Comma-separated file (*.csv)|*.csv|"
+        dialog = wx.FileDialog(None, _("Choose a file"), os.getcwd(), "", wildcard, wx.OPEN)
+        if dialog.ShowModal() == wx.ID_OK:
+                csvfile = dialog.GetPath()
+        f = open(csvfile,"r")
+        reader = csv.reader(f, delimiter = ",")
+        data = [l for l in reader]
+        progressMax = len(data)
+        if progressMax > 0:
+                with open(csvfile, 'rb') as input:
+                        reader = csv.DictReader(input)
+                        dialog = wx.ProgressDialog(_("Importing ")+str(progressMax)+_(" settings..."), _("Time remaining"), progressMax, style=wx.PD_APP_MODAL | wx.PD_ELAPSED_TIME | wx.PD_REMAINING_TIME | wx.PD_AUTO_HIDE)    
+                        count = 0
+                        for row in reader:
+                                count += 1
+                                try:
+                                        # only change setting if value is different
+                                        if mdrrc2serial.ReadConfig()[row[_('Parameter')]] != row[_('Value')]:
+                                                mdrrc2serial.ChangeConfig(row[_('Parameter')], row[_('Value')], configList)
+                                        dialog.Update(count)
+                                except:
+                                        dlg = wx.MessageDialog(self, _("Invalid csv file!"),_("Error"), wx.OK|wx.ICON_WARNING)
+                                        result = dlg.ShowModal()
+                                        break
+                mdrrc2serial.StoreConfig()
+                dialog.Destroy()
+        else:
+               dlg = wx.MessageDialog( self, _("No valid config items in file."), _("Error"), wx.OK)
+               dlg.ShowModal() # Show it 
         self.Destroy()
 
-    def Export(self, e):
-        csvfile = self.settings[3]
-        with open(csvfile, "w") as output:
-                writer = csv.writer(output, lineterminator='\n')
-                writer.writerow([_('Parameter'), _('Value')])
-                for c in configList:
-                        writer.writerow([c]+[configList[c]])
-        self.Destroy()
+    def ExportSave(self, e):
+        dlg = wx.FileDialog(self, _("Choose a file"), '', self.settings[3], "*.csv", wx.SAVE | wx.OVERWRITE_PROMPT)
+        if dlg.ShowModal() == wx.ID_OK:
+                csvfile = dlg.GetFilename()
+                self.dirname=dlg.GetDirectory()
+                with open(os.path.join(self.dirname, csvfile), "w") as output:
+                        writer = csv.writer(output, lineterminator='\n')
+                        writer.writerow([_('Parameter'), _('Value')])
+                        for c in configList:
+                                writer.writerow([c]+[configList[c]])
+        # Get rid of the dialog to keep things tidy
+        dlg.Destroy()
+        UpdateStatus(_('Config exported to ')+os.path.join(self.dirname, csvfile))
 
 def Foutmelding(parent, message, caption = _('MDRRC-II config editor: Error!')):
   dlg = wx.MessageDialog(parent, message, caption, wx.OK | wx.ICON_WARNING)
   dlg.ShowModal()
   dlg.Destroy()
+  
+def UpdateStatus(text):
+  sb.SetStatusText(text)
 
 def startup():
   # Read settings for config program
