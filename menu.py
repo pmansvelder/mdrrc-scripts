@@ -13,11 +13,9 @@ gettext.install('mdrrc-editor')
 
 class MenuFrame(wx.Frame):
     def __init__(self, parent):
-#        wx.Frame.__init__(self, parent, -1, _("MDRRC-II Config Menu"), size=(425, 175))
         wx.Frame.__init__(self, parent, -1)
         
         self.SetTitle(_("MDRRC-II Config Menu"))
-        self.windowSizer = wx.BoxSizer()
 
         # Read settings for config program
         self.settings = mdrrcsettings.ReadConfig(None)
@@ -25,7 +23,7 @@ class MenuFrame(wx.Frame):
         # A statusbar
         self.CreateStatusBar()
 
-	# A menubar
+        # A menubar
         filemenu= wx.Menu()
 
         # wx.ID_ABOUT and wx.ID_EXIT are standard IDs provided by wxWidgets.
@@ -57,8 +55,7 @@ class MenuFrame(wx.Frame):
         self.Bind(wx.EVT_TOOL, self.Settings, id=ID_SETTINGS)
         
         tb.Realize()
-        self.windowSizer.Add(tb, 1, wx.ALL)
-        self.SetSizerAndFit(self.windowSizer)
+        self.SetSize((425,200))
     
     def OnAbout(self,e):
         # A message dialog box with an OK button. wx.OK is a standard ID in wxWidgets.
@@ -84,7 +81,7 @@ class MenuFrame(wx.Frame):
         settings_dialog.Destroy()
 
 def MenuWindow():
-  MenuApp = wx.PySimpleApp()
+  MenuApp = wx.App(False)
   frame = MenuFrame(None)
   frame.Centre()
   frame.Show(True)
