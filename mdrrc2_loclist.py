@@ -165,7 +165,7 @@ class LoclistFrame(wx.Frame, list):
         key = self.locgrid.GetCellValue(Row, 0)
         listoflocs[int(key)][Col-1] = self.locgrid.GetCellValue(Row, Col).encode('ascii','ignore')
         if Col == 1:
-           mdrrc2serial.ChangeLocName(int(key),self.locgrid.GetCellValue(Row, Col))
+           mdrrc2serial.ChangeLocName(int(key),self.locgrid.GetCellValue(Row, Col).encode())
         elif Col == 2:
            mdrrc2serial.ChangeLocType(int(key))
            
