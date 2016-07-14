@@ -251,7 +251,7 @@ class ConfiglistFrame(wx.Frame, list):
         UpdateStatus(_('Config saved to controller'))
  
     def Import(self, e):
-        wildcard = "Comma-separated file (*.csv)|*.csv|"
+        wildcard = "Comma-separated file (*.csv)|*.csv"
         dialog = wx.FileDialog(None, _("Choose a file"), os.getcwd(), "", wildcard, wx.OPEN)
         if dialog.ShowModal() == wx.ID_OK:
                 csvfile = dialog.GetPath()
