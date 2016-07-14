@@ -4,11 +4,16 @@ import copy
 import wx
 import gettext
 import ConfigParser as cf
-import os
+import os,sys
 import mdrrc2serial, mdrrcsettings
 import mdrrc2_config, mdrrc2_loclist
 
 # Language suppport
+if sys.platform.startswith('win'):
+    import locale
+    if os.getenv('LANG') is None:
+        lang, enc = locale.getdefaultlocale()
+        os.environ['LANG'] = lang
 gettext.install('mdrrc-editor')
 
 class MenuFrame(wx.Frame):
