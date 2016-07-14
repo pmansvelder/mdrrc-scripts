@@ -18,9 +18,9 @@ class ConfiglistFrame(wx.Frame, list):
     def __init__(self, parent, list):
         wx.Frame.__init__(self, parent, -1, _("MDRRC-II Config List"), size=(310, 465))
 
-        self.sizer = wx.BoxSizer(wx.VERTICAL)
-        self.gridPnl = wx.Panel(self)
-        self.gridPnlSizer = wx.BoxSizer(wx.VERTICAL)
+#        self.sizer = wx.BoxSizer(wx.VERTICAL)
+#        self.gridPnl = wx.Panel(self)
+#        self.gridPnlSizer = wx.BoxSizer(wx.VERTICAL)
         
         # Read settings for config program
         self.settings = mdrrcsettings.ReadConfig(None)
@@ -124,16 +124,16 @@ class ConfiglistFrame(wx.Frame, list):
               self.OnGrid1GridEditorHidden)
 
         # Some magic to make grid stay in the middle
-        self.gridPnl.SetAutoLayout(True )
-        self.gridPnl.SetSizer(self.gridPnlSizer)
-        self.gridPnlSizer.Fit(self.gridPnl)
-         
-        self.gridPnlSizer.Add(self.locgrid,flag=wx.ALIGN_CENTER_HORIZONTAL)
-        self.sizer.Add(self.gridPnl,-1,wx.EXPAND)
- 
-        self.SetAutoLayout(True)
-        self.SetSizer(self.sizer)
-        self.sizer.Fit(self) 
+#        self.gridPnl.SetAutoLayout(True )
+#        self.gridPnl.SetSizer(self.gridPnlSizer)
+#        self.gridPnlSizer.Fit(self.gridPnl)
+#         
+#        self.gridPnlSizer.Add(self.locgrid,flag=wx.ALIGN_CENTER_HORIZONTAL)
+#        self.sizer.Add(self.gridPnl,-1,wx.EXPAND)
+# 
+#        self.SetAutoLayout(True)
+#        self.SetSizer(self.sizer)
+#        self.sizer.Fit(self) 
               
         self.Centre()
         self.Show(True)
