@@ -54,19 +54,19 @@ class ConfiglistFrame(wx.Frame, list):
         tb = self.CreateToolBar()
         
         ID_SAVE = wx.NewId()
-        tb.AddLabelTool(id=ID_SAVE, label=_('Store config'), bitmap=wx.Bitmap('document-save.png'), longHelp=_('Store config on controller'))
+        tb.AddLabelTool(id=ID_SAVE, label=_('Store config'), bitmap=wx.Bitmap('icons/document-save.png'), longHelp=_('Store config on controller'))
         self.Bind(wx.EVT_TOOL, self.SaveOnly, id=ID_SAVE)
         
         ID_SAVERESET = wx.NewId()        
-        tb.AddLabelTool(id=ID_SAVERESET, label=_('Store config and reset'), bitmap=wx.Bitmap('document-save-all.png'), longHelp=_('Store config and reset controller'))
+        tb.AddLabelTool(id=ID_SAVERESET, label=_('Store config and reset'), bitmap=wx.Bitmap('icons/document-save-all.png'), longHelp=_('Store config and reset controller'))
         self.Bind(wx.EVT_TOOL, self.SaveAndReset, id=ID_SAVERESET)
      
         ID_EXPORT = wx.NewId()
-        tb.AddLabelTool(id=ID_EXPORT, label=_('Export'), bitmap=wx.Bitmap('document-export.png'), longHelp=_('Export config'))
+        tb.AddLabelTool(id=ID_EXPORT, label=_('Export'), bitmap=wx.Bitmap('icons/document-export.png'), longHelp=_('Export config'))
         self.Bind(wx.EVT_TOOL, self.ExportSave, id=ID_EXPORT)
 
         ID_IMPORT = wx.NewId()
-        tb.AddLabelTool(id=ID_IMPORT, label=_('Import'), bitmap=wx.Bitmap('document-import.png'), longHelp=_('Import config'))
+        tb.AddLabelTool(id=ID_IMPORT, label=_('Import'), bitmap=wx.Bitmap('icons/document-import.png'), longHelp=_('Import config'))
         self.Bind(wx.EVT_TOOL, self.Import, id=ID_IMPORT)
      
         tb.Realize()

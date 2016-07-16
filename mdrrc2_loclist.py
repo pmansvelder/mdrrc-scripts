@@ -62,31 +62,31 @@ class LoclistFrame(wx.Frame, list):
         tb = self.CreateToolBar()
         
         ID_NEWLOCO = wx.NewId() 
-        tb.AddLabelTool(id=ID_NEWLOCO, label=_('New Loco'), bitmap=wx.Bitmap('document-new.png'), longHelp=_('Add a new loco'))
+        tb.AddLabelTool(id=ID_NEWLOCO, label=_('New Loco'), bitmap=wx.Bitmap('icons/document-new.png'), longHelp=_('Add a new loco'))
         self.Bind(wx.EVT_TOOL, self.NewLoco, id=ID_NEWLOCO)
                 
         ID_DELLOCO = wx.NewId()
-        tb.AddLabelTool(id=ID_DELLOCO, label=_('Delete Loco'), bitmap=wx.Bitmap('edit-delete.png'), longHelp=_('Delete an existing loco'))
+        tb.AddLabelTool(id=ID_DELLOCO, label=_('Delete Loco'), bitmap=wx.Bitmap('icons/edit-delete.png'), longHelp=_('Delete an existing loco'))
         self.Bind(wx.EVT_TOOL, self.DelLoc, id=ID_DELLOCO)
         
         ID_SAVE = wx.NewId()
-        tb.AddLabelTool(id=ID_SAVE, label=_('Store config'), bitmap=wx.Bitmap('document-save.png'), longHelp=_('Store config on controller'))
+        tb.AddLabelTool(id=ID_SAVE, label=_('Store config'), bitmap=wx.Bitmap('icons/document-save.png'), longHelp=_('Store config on controller'))
         self.Bind(wx.EVT_TOOL, self.SaveOnly, id=ID_SAVE)
         
         ID_SAVERESET = wx.NewId()
-        tb.AddLabelTool(id=ID_SAVERESET, label=_('Store config and reset'), bitmap=wx.Bitmap('document-save-all.png'), longHelp=_('Store config and reset controller'))
+        tb.AddLabelTool(id=ID_SAVERESET, label=_('Store config and reset'), bitmap=wx.Bitmap('icons/document-save-all.png'), longHelp=_('Store config and reset controller'))
         self.Bind(wx.EVT_TOOL, self.SaveAndReset, id=ID_SAVERESET)
         
         ID_EXPORT = wx.NewId()
-        tb.AddLabelTool(id=ID_EXPORT, label=_('Export'), bitmap=wx.Bitmap('document-export.png'), longHelp=_('Export loco listing'))
+        tb.AddLabelTool(id=ID_EXPORT, label=_('Export'), bitmap=wx.Bitmap('icons/document-export.png'), longHelp=_('Export loco listing'))
         self.Bind(wx.EVT_TOOL, self.ExportSave, id=ID_EXPORT)
         
         ID_IMPORT = wx.NewId()
-        tb.AddLabelTool(id=ID_IMPORT, label=_('Import'), bitmap=wx.Bitmap('document-import.png'), longHelp=_('Import loco listing'))
+        tb.AddLabelTool(id=ID_IMPORT, label=_('Import'), bitmap=wx.Bitmap('icons/document-import.png'), longHelp=_('Import loco listing'))
         self.Bind(wx.EVT_TOOL, self.Import, id=ID_IMPORT)
         
         ID_PURGE = wx.NewId()
-        tb.AddLabelTool(id=ID_PURGE, label=_('Purge'), bitmap=wx.Bitmap('edit-bomb.png'), longHelp=_('Purge list'))
+        tb.AddLabelTool(id=ID_PURGE, label=_('Purge'), bitmap=wx.Bitmap('icons/edit-bomb.png'), longHelp=_('Purge list'))
         self.Bind(wx.EVT_TOOL, self.Purge, id=ID_PURGE)
                 
         tb.Realize()
@@ -326,7 +326,8 @@ class LoclistFrame(wx.Frame, list):
                 dialog.Destroy()
         else:
                dlg = wx.MessageDialog( self, _("No locos found in file."), _("Error"), wx.OK)
-               dlg.ShowModal() # Show it 
+               dlg.ShowModal() # Show it
+        mdrrc2serial.StoreConfig()
         self.Destroy()
 
     def NewLoco(self, e):
