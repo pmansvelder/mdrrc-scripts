@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-15 01:14+0200\n"
+"POT-Creation-Date: 2016-07-16 15:19+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -167,6 +167,7 @@ msgstr ""
 #: mdrrc2_config.py:264 mdrrc2_loclist.py:385 mdrrc2_config.py:263
 #: mdrrc2_config.py:259 mdrrc2_loclist.py:434 mdrrc2_loclist.py:457
 #: mdrrc2_loclist.py:458 mdrrc2_config.py:319 mdrrc2_loclist.py:445
+#: mdrrc2_loclist.py:446
 msgid "Connection parameters not correct or controller not connected!"
 msgstr "Connectieparameters verkeerd of controller niet aangesloten!"
 
@@ -244,23 +245,24 @@ msgstr "Over dit programma"
 #: mdrrc2_loclist.py:272 mdrrc2_loclist.py:298 mdrrc2_loclist.py:323
 #: mdrrc2_loclist.py:349 mdrrc2_loclist.py:346 mdrrc2_loclist.py:372
 #: mdrrc2_loclist.py:347 mdrrc2_loclist.py:373 mdrrc2_loclist.py:334
-#: mdrrc2_loclist.py:360
+#: mdrrc2_loclist.py:360 mdrrc2_loclist.py:335 mdrrc2_loclist.py:361
 msgid "New Loco Address"
 msgstr "Nieuw lokadres"
 
 #: mdrrc2_loclist.py:279 mdrrc2_loclist.py:330 mdrrc2_loclist.py:353
-#: mdrrc2_loclist.py:354 mdrrc2_loclist.py:341
+#: mdrrc2_loclist.py:354 mdrrc2_loclist.py:341 mdrrc2_loclist.py:342
 msgid "Do you really want to delete loco "
 msgstr "Weet u zeker dat u deze lok wilt wissen: "
 
 #: mdrrc2_loclist.py:280 mdrrc2_loclist.py:277 mdrrc2_loclist.py:331
 #: mdrrc2_loclist.py:295 mdrrc2_loclist.py:354 mdrrc2_loclist.py:296
 #: mdrrc2_loclist.py:355 mdrrc2_loclist.py:283 mdrrc2_loclist.py:342
+#: mdrrc2_loclist.py:343
 msgid "Klik OK to confirm"
 msgstr "Klik op OK om te verwijderen"
 
 #: mdrrc2_loclist.py:287 mdrrc2_loclist.py:338 mdrrc2_loclist.py:361
-#: mdrrc2_loclist.py:362 mdrrc2_loclist.py:349
+#: mdrrc2_loclist.py:362 mdrrc2_loclist.py:349 mdrrc2_loclist.py:350
 msgid "No loco selected!"
 msgstr "Geen lokadres geselecteerd!"
 
@@ -268,12 +270,12 @@ msgstr "Geen lokadres geselecteerd!"
 #: mdrrc2_loclist.py:335 mdrrc2_loclist.py:340 mdrrc2_loclist.py:361
 #: mdrrc2_loclist.py:336 mdrrc2_loclist.py:341 mdrrc2_loclist.py:362
 #: mdrrc2_config.py:275 mdrrc2_config.py:281 mdrrc2_loclist.py:323
-#: mdrrc2_loclist.py:328 mdrrc2_loclist.py:349
+#: mdrrc2_loclist.py:328 mdrrc2_loclist.py:349 mdrrc2_loclist.py:350
 msgid "Error"
 msgstr "Fout"
 
 #: mdrrc2_loclist.py:305 mdrrc2_loclist.py:356 mdrrc2_loclist.py:379
-#: mdrrc2_loclist.py:380 mdrrc2_loclist.py:367
+#: mdrrc2_loclist.py:380 mdrrc2_loclist.py:367 mdrrc2_loclist.py:368
 msgid "Loco"
 msgstr "Lok"
 
@@ -284,31 +286,33 @@ msgstr "Lok"
 #: mdrrc2_loclist.py:384 mdrrc2_loclist.py:333 mdrrc2_loclist.py:385
 #: mdrrc2_loclist.py:274 mdrrc2_loclist.py:317 mdrrc2_loclist.py:318
 #: mdrrc2_loclist.py:319 mdrrc2_loclist.py:320 mdrrc2_loclist.py:372
+#: mdrrc2_loclist.py:373
 msgid "Adress"
 msgstr "Adres"
 
 #: mdrrc2_loclist.py:319 mdrrcsettings.py:15 mdrrc2_loclist.py:370
 #: mdrrc2_loclist.py:393 mdrrc2_loclist.py:394 mdrrc2_loclist.py:381
+#: mdrrc2_loclist.py:382
 msgid "Save"
 msgstr "Bewaar"
 
 #: mdrrc2_loclist.py:320 mdrrc2_loclist.py:371 mdrrc2_loclist.py:394
-#: mdrrc2_loclist.py:395 mdrrc2_loclist.py:382
+#: mdrrc2_loclist.py:395 mdrrc2_loclist.py:382 mdrrc2_loclist.py:383
 msgid "Cancel"
 msgstr "Annuleer"
 
 #: mdrrc2_loclist.py:364 mdrrc2_loclist.py:415 mdrrc2_loclist.py:438
-#: mdrrc2_loclist.py:439 mdrrc2_loclist.py:426
+#: mdrrc2_loclist.py:439 mdrrc2_loclist.py:426 mdrrc2_loclist.py:427
 msgid "Current loc addresses: "
 msgstr "Huidige lokadressen: "
 
 #: mdrrc2_loclist.py:366 mdrrc2_loclist.py:417 mdrrc2_loclist.py:440
-#: mdrrc2_loclist.py:441 mdrrc2_loclist.py:428
+#: mdrrc2_loclist.py:441 mdrrc2_loclist.py:428 mdrrc2_loclist.py:429
 msgid "MDRRC-II loc editor: Error!"
 msgstr "MDRRC-II lokeditor: fout!"
 
 #: mdrrc2_loclist.py:383 mdrrc2_loclist.py:432 mdrrc2_loclist.py:455
-#: mdrrc2_loclist.py:456 mdrrc2_loclist.py:443
+#: mdrrc2_loclist.py:456 mdrrc2_loclist.py:443 mdrrc2_loclist.py:444
 msgid ""
 "Centrale not in config mode or not connected!\n"
 "Make sure MDRRC-II controller is connected and set to config mode (SET-"
