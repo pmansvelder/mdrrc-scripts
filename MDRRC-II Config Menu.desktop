@@ -3,11 +3,11 @@
 [Desktop Entry]
 Terminal=false
 Name=MDRRC-II Config Editor
-Exec=/home/pman/Dropbox/Peter/Scripts/mdrrc2/menu.py
+Exec=/home/pman/Dropbox/Peter/Scripts/mdrrc2/menu.pyw
 Path=/home/pman/Dropbox/Peter/Scripts/mdrrc2/
 Type=Application
-Icon=applications-games-symbolic
-Icon[nl]=/home/pman/Dropbox/Peter/Scripts/mdrrc2/train_icon.png
+Icon=/home/pman/Dropbox/Peter/Scripts/mdrrc2/icons/train_icon_128x128.png
+Icon[nl]=/home/pman/Dropbox/Peter/Scripts/mdrrc2/icons/train_icon.png
 Comment[nl]=Menu voor MDRRC-II config editor
 Comment=Menu voor MDRRC-II config editor
 Name[nl]=MDRRC-II Config Menu
