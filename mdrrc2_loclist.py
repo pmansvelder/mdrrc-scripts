@@ -15,9 +15,12 @@ import mdrrc2serial,mdrrcsettings
 gettext.install('mdrrc-editor')
 
 class LoclistFrame(wx.Frame, list):
-    def __init__(self, parent, list):
-        wx.Frame.__init__(self, parent, -1, _("MDRRC-II Loc Editor"), size=(430, 800))
 
+    def __init__(self, parent, list):
+        wx.Frame.__init__(self, parent, -1, _("MDRRC-II Loc Editor"), size=(485, 800))
+        self.InitUI(parent, list)
+    
+    def InitUI(self, parent, list):
         # Read settings for config program
         self.settings = mdrrcsettings.ReadConfig(None)
         
@@ -88,6 +91,10 @@ class LoclistFrame(wx.Frame, list):
         ID_PURGE = wx.NewId()
         tb.AddLabelTool(id=ID_PURGE, label=_('Purge'), bitmap=wx.Bitmap('icons/edit-bomb.png'), longHelp=_('Purge list'))
         self.Bind(wx.EVT_TOOL, self.Purge, id=ID_PURGE)
+        
+        ID_REFRESH = wx.NewId()
+        tb.AddLabelTool(id=ID_REFRESH, label=_('Refresh'), bitmap=wx.Bitmap('icons/view-refresh.png'), longHelp=_('Refresh list'))
+        self.Bind(wx.EVT_TOOL, self.Refresh, id=ID_REFRESH)        
                 
         tb.Realize()
 
@@ -139,6 +146,11 @@ class LoclistFrame(wx.Frame, list):
         self.Centre()
         self.Show(True)
 
+    def Refresh(self, event):
+        self.Destroy()
+        listoflocs = mdrrc2serial.ParseLocList()
+        frame = LoclistFrame(None, listoflocs)
+        
     def _OnSelectedCell( self, event ):
          """Internal update to the selection tracking list"""
          global selected_address
@@ -295,7 +307,7 @@ class LoclistFrame(wx.Frame, list):
                         dialog.Update(count)
                 mdrrc2serial.ChangeLocName(1,"TEST")
                 dialog.Destroy()
-                self.Destroy()
+                self.Refresh(listoflocs)
 
     def Import(self, e):
         wildcard = "Comma-separated file (*.csv)|*.csv"
@@ -328,14 +340,14 @@ class LoclistFrame(wx.Frame, list):
                dlg = wx.MessageDialog( self, _("No locos found in file."), _("Error"), wx.OK)
                dlg.ShowModal() # Show it
         mdrrc2serial.StoreConfig()
-        self.Destroy()
+        self.Refresh(listoflocs)
 
     def NewLoco(self, e):
         chgdep = NewLocoDialog(None, 
             title=_('New Loco Address'))
         chgdep.ShowModal()
         chgdep.Destroy()
-        self.Destroy()
+        self.Refresh(listoflocs)
 
     def DelLoc(self, event):
         try: 
@@ -345,7 +357,7 @@ class LoclistFrame(wx.Frame, list):
                 dlg.Destroy()
                 if result == wx.ID_OK:
                         mdrrc2serial.RemoveLoco(selected_address)
-                        self.Destroy()
+                        self.Refresh(listoflocs)
         except: 
                 dlg = wx.MessageDialog(self, _("No loco selected!"),_("Error"), wx.OK|wx.ICON_WARNING)
                 result = dlg.ShowModal()
