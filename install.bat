@@ -1,4 +1,4 @@
-# Installs translation files for dutch
+rem Installs translation files for dutch
 
 xgettext -L python -f filelist -j mdrrc-editor.po
 msgfmt messages.po

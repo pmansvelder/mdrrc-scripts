@@ -343,8 +343,7 @@ class LoclistFrame(wx.Frame, list):
         self.Refresh(listoflocs)
 
     def NewLoco(self, e):
-        chgdep = NewLocoDialog(None, 
-            title=_('New Loco Address'))
+        chgdep = NewLocoDialog(None, title=_('New Loco Address'))
         chgdep.ShowModal()
         chgdep.Destroy()
         self.Refresh(listoflocs)
@@ -369,7 +368,7 @@ class NewLocoDialog(wx.Dialog):
         super(NewLocoDialog, self).__init__(*args, **kw) 
             
         self.InitUI()
-        self.SetSize((250, 110))
+        self.SetSize((250, 125))
         self.SetTitle(_("New Loco Address"))
         
     def InitUI(self):

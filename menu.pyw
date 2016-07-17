@@ -60,7 +60,7 @@ class MenuFrame(wx.Frame):
         self.Bind(wx.EVT_TOOL, self.Settings, id=ID_SETTINGS)
         
         tb.Realize()
-        self.SetSize((425,200))
+        self.SetSize((425,215))
     
     def OnAbout(self,e):
         # A message dialog box with an OK button. wx.OK is a standard ID in wxWidgets.
