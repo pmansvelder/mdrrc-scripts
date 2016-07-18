@@ -123,4 +123,8 @@ def ChangeConfig(key, value, configlist):
           ser.write('I2C'+'\r')
         elif k == 'XPressNet':
           ser.write('XP'+'\r')
+        elif k == 'Text colour':
+          ser.write('CF'+str(value)+'\r')
+        elif k == 'Background colour':
+          ser.write('CB'+str(value)+'\r')
         ser.close()

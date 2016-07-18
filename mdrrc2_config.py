@@ -68,6 +68,10 @@ class ConfiglistFrame(wx.Frame, list):
         ID_IMPORT = wx.NewId()
         tb.AddLabelTool(id=ID_IMPORT, label=_('Import'), bitmap=wx.Bitmap('icons/document-import.png'), longHelp=_('Import config'))
         self.Bind(wx.EVT_TOOL, self.Import, id=ID_IMPORT)
+ 
+        ID_COLOR = wx.NewId()
+        tb.AddLabelTool(id=ID_COLOR, label=_('Colour'), bitmap=wx.Bitmap('icons/document-import.png'), longHelp=_('Colour Change'))
+        self.Bind(wx.EVT_TOOL, self.OnCC, id=ID_COLOR)
      
         tb.Realize()
 
@@ -76,7 +80,8 @@ class ConfiglistFrame(wx.Frame, list):
         Editor_YesNo = wx.grid.GridCellChoiceEditor(['Yes.','No.'], allowOthers=False)
         Editor_EnabledDisabled = wx.grid.GridCellChoiceEditor(['Enabled.','Disabled.'], allowOthers=False)
         Editor_HighLow = wx.grid.GridCellChoiceEditor(['High.','Low.'], allowOthers=False)
-
+        Editor_Colour = wx.grid.GridCellChoiceEditor(['Choose...'], allowOthers=False)
+        
         # Determine size of grid
         NumberOfLines = len(list)
         NumberOfRows = 2
@@ -103,6 +108,8 @@ class ConfiglistFrame(wx.Frame, list):
             self.locgrid.SetCellEditor(i, 1, Editor_EnabledDisabled)
           elif (l == 'Booster S/C change'):
             self.locgrid.SetCellEditor(i, 1, Editor_HighLow)
+          elif (l == 'Text colour') or (l == 'Background colour'):
+            self.locgrid.SetCellEditor(i, 1, Editor_Colour)
           i += 1
 
         self.locgrid.AutoSizeColumn(0)
@@ -147,15 +154,24 @@ class ConfiglistFrame(wx.Frame, list):
         Col = event.GetCol()
 
         global configList
-        
+
+        key = self.locgrid.GetCellValue(Row, 0)
+        OldValue = str(configList[key])
+        if (key == 'Text colour' or key == 'Background colour') and (self.locgrid.GetCellValue(Row, 1) == 'Choose...'):
+          NewValue = self.OnCC(self, OldValue)
+          configList[key] = NewValue
+          mdrrc2serial.ChangeConfig(key, NewValue, configList)
+          self.locgrid.SetCellValue(Row, 1, NewValue)
+        else:
+       
         #All cells have a value, regardless of the editor.
 
         # Modify item in list as a result from editing in the grid
-        key = self.locgrid.GetCellValue(Row, 0)
-        OldValue = configList[key]
-        NewValue = self.locgrid.GetCellValue(Row, Col).encode('ascii','ignore')
-        configList[key] = NewValue
-        mdrrc2serial.ChangeConfig(key, NewValue, configList)
+                key = self.locgrid.GetCellValue(Row, 0)
+                OldValue = configList[key]
+                NewValue = self.locgrid.GetCellValue(Row, Col).encode('ascii','ignore')
+                configList[key] = NewValue
+                mdrrc2serial.ChangeConfig(key, NewValue, configList)
         event.Skip()
  
     #This method fires when the underlying GridCellChoiceEditor ComboBox
@@ -166,11 +182,11 @@ class ConfiglistFrame(wx.Frame, list):
         self.locgrid.data = self.comboBox.GetClientData(self.locgrid.index)
         event.Skip()
 
-
     #This method fires when any text editing is done inside the text portion
     #of the ComboBox. This method will fire once for each new character, so
     #the print statements will show the character by character changes.
     def OnGrid1ComboBoxText(self, event):
+
         #The index for text changes is always -1. This is how we can tell
         #that new text has been entered, as opposed to a simple selection
         #from the drop list. Note that the index will be set for each character,
@@ -186,7 +202,7 @@ class ConfiglistFrame(wx.Frame, list):
     def OnGrid1GridEditorHidden(self, event):
         Row = event.GetRow()
         Col = event.GetCol()
-        
+
         #If the following conditions are true, it means that new text has 
         #been entered in a GridCellChoiceEditor cell, in which case we want
         #to append the new item to our selection list.
@@ -219,7 +235,7 @@ class ConfiglistFrame(wx.Frame, list):
     def OnGrid1GridEditorCreated(self, event):
         Row = event.GetRow()
         Col = event.GetCol()
-        
+                    
         #In this example, all cells in row 0 are GridCellChoiceEditors,
         #so we need to setup the selection list and bindings. We can't
         #do this in advance, because the ComboBox control is created with
@@ -235,6 +251,30 @@ class ConfiglistFrame(wx.Frame, list):
             #Load the initial choice list.
         
         event.Skip()
+
+    def OnCC(self, event, colour):
+            data = wx.ColourData()
+            data.SetChooseFull(True)
+            
+            global configList
+
+            # set the first custom color (index 0)
+            data.SetCustomColour(0, (255, 170, 128))
+            # set indexes 1-N here if you like.
+
+            # set the default color in the chooser
+            data.SetColour(wx.Colour(128, 255, 170))
+
+            # construct the chooser
+            dlg = wx.ColourDialog(self, data)
+
+            if dlg.ShowModal() == wx.ID_OK:
+                color = dlg.GetColourData().Colour
+                NewValue = str(hex(color[2]+256*color[1]+256*256*color[0]))
+                return NewValue
+            else:
+                return colour
+            dlg.Destroy()
 
     def OnAbout(self,e):
         # A message dialog box with an OK button. wx.OK is a standard ID in wxWidgets.
