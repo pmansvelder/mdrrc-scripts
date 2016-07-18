@@ -68,10 +68,6 @@ class ConfiglistFrame(wx.Frame, list):
         ID_IMPORT = wx.NewId()
         tb.AddLabelTool(id=ID_IMPORT, label=_('Import'), bitmap=wx.Bitmap('icons/document-import.png'), longHelp=_('Import config'))
         self.Bind(wx.EVT_TOOL, self.Import, id=ID_IMPORT)
- 
-        ID_COLOR = wx.NewId()
-        tb.AddLabelTool(id=ID_COLOR, label=_('Colour'), bitmap=wx.Bitmap('icons/document-import.png'), longHelp=_('Colour Change'))
-        self.Bind(wx.EVT_TOOL, self.OnCC, id=ID_COLOR)
      
         tb.Realize()
 
