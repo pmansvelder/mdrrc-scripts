@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-17 23:14+0200\n"
+"POT-Creation-Date: 2016-07-20 21:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,13 +23,13 @@ msgstr "MDRRC-II configuratiemenu"
 
 #: menu.py:30 mdrrc2_config.py:33 mdrrc2_loclist.py:36 menu.py:28
 #: mdrrc2_config.py:31 mdrrc2_loclist.py:34 menu.py:35 mdrrc2_config.py:36
-#: menu.pyw:35 mdrrc2_loclist.py:37
+#: menu.pyw:35 mdrrc2_loclist.py:37 mdrrc2_config.py:58
 msgid "&About"
 msgstr "&Over"
 
 #: menu.py:30 mdrrc2_config.py:33 mdrrc2_loclist.py:36 menu.py:28
 #: mdrrc2_config.py:31 mdrrc2_loclist.py:34 menu.py:35 mdrrc2_config.py:36
-#: menu.pyw:35 mdrrc2_loclist.py:37
+#: menu.pyw:35 mdrrc2_loclist.py:37 mdrrc2_config.py:58
 msgid " Information about this program"
 msgstr " Informatie over dit programma"
 
@@ -39,13 +39,13 @@ msgstr "S&top menu"
 
 #: menu.py:34 mdrrc2_config.py:42 mdrrc2_loclist.py:55 menu.py:32
 #: mdrrc2_config.py:40 mdrrc2_loclist.py:53 menu.py:39 mdrrc2_config.py:45
-#: menu.pyw:39 mdrrc2_loclist.py:56
+#: menu.pyw:39 mdrrc2_loclist.py:56 mdrrc2_config.py:67
 msgid " Terminate the program"
 msgstr " Stop het programma"
 
 #: menu.py:39 mdrrc2_config.py:47 mdrrc2_loclist.py:60 menu.py:37
 #: mdrrc2_config.py:45 mdrrc2_loclist.py:58 menu.py:44 mdrrc2_config.py:50
-#: menu.pyw:44 mdrrc2_loclist.py:61
+#: menu.pyw:44 mdrrc2_loclist.py:61 mdrrc2_config.py:72
 msgid "&File"
 msgstr "&Bestand"
 
@@ -77,88 +77,107 @@ msgstr "Configuratie MDRRC-II systeem"
 msgid "About MDRRC-II Editor"
 msgstr "Over de MDRRC-II configuratie"
 
-#: mdrrc2_config.py:19
+#: mdrrc2_config.py:19 mdrrc2_config.py:41
 msgid "MDRRC-II Config List"
 msgstr "MDRRC-II Configuratielijst"
 
 #: mdrrc2_config.py:35 mdrrc2_loclist.py:48 mdrrc2_config.py:33
 #: mdrrc2_loclist.py:46 mdrrc2_config.py:38 mdrrc2_loclist.py:49
+#: mdrrc2_config.py:60
 msgid "&Save and exit"
 msgstr "Bewaar en &stop"
 
 #: mdrrc2_config.py:35 mdrrc2_loclist.py:48 mdrrc2_config.py:33
 #: mdrrc2_loclist.py:46 mdrrc2_config.py:38 mdrrc2_loclist.py:49
+#: mdrrc2_config.py:60
 msgid " Save and reboot"
 msgstr " Bewaar wijzigingen en herstart controller"
 
 #: mdrrc2_config.py:37 mdrrc2_loclist.py:51 mdrrc2_config.py:35
 #: mdrrc2_loclist.py:49 mdrrc2_config.py:40 mdrrc2_loclist.py:52
+#: mdrrc2_config.py:62
 msgid "Save &only"
 msgstr "&Bewaar wijzigingen"
 
 #: mdrrc2_config.py:37 mdrrc2_loclist.py:51 mdrrc2_config.py:35
 #: mdrrc2_loclist.py:49 mdrrc2_config.py:40 mdrrc2_loclist.py:52
+#: mdrrc2_config.py:62
 msgid " Save without reboot"
 msgstr " Bewaar wijzigingen"
 
 #: mdrrc2_config.py:42 mdrrc2_loclist.py:55 mdrrc2_config.py:40
 #: mdrrc2_loclist.py:53 mdrrc2_config.py:45 mdrrc2_loclist.py:56
+#: mdrrc2_config.py:67
 msgid "E&xit without reset"
 msgstr "Stoppen &zonder herstarten"
 
 #: mdrrc2_config.py:54 mdrrc2_loclist.py:75 mdrrc2_config.py:52
 #: mdrrc2_loclist.py:73 mdrrc2_config.py:57 mdrrc2_loclist.py:76
+#: mdrrc2_config.py:79
 msgid "Store config"
 msgstr "Bewaar configuratie"
 
 #: mdrrc2_config.py:58 mdrrc2_loclist.py:79 mdrrc2_config.py:56
 #: mdrrc2_loclist.py:77 mdrrc2_config.py:61 mdrrc2_loclist.py:80
+#: mdrrc2_config.py:83
 msgid "Store config and reset"
 msgstr "Bewaar config en herstart controller"
 
 #: mdrrc2_config.py:58 mdrrc2_loclist.py:79 mdrrc2_config.py:56
 #: mdrrc2_loclist.py:77 mdrrc2_config.py:61 mdrrc2_loclist.py:80
+#: mdrrc2_config.py:83
 msgid "Store config and reset controller"
 msgstr "Bewaar config en herstart controller"
 
 #: mdrrc2_config.py:63 mdrrc2_loclist.py:83 mdrrc2_config.py:61
 #: mdrrc2_loclist.py:81 mdrrc2_config.py:65 mdrrc2_loclist.py:84
+#: mdrrc2_config.py:87
 msgid "Export"
 msgstr "Exporteer"
 
 #: mdrrc2_config.py:63 mdrrc2_config.py:61 mdrrc2_config.py:65
+#: mdrrc2_config.py:87
 msgid "Export config"
 msgstr "Exporteer configuratie"
 
 #: mdrrc2_config.py:83 mdrrc2_config.py:81 mdrrc2_config.py:89
+#: mdrrc2_config.py:90 mdrrc2_config.py:112
 msgid "Key"
 msgstr "Parameter"
 
 #: mdrrc2_config.py:84 mdrrc2_config.py:239 mdrrc2_config.py:82
 #: mdrrc2_config.py:237 mdrrc2_config.py:90 mdrrc2_config.py:271
-#: mdrrc2_config.py:272 mdrrc2_config.py:292
+#: mdrrc2_config.py:272 mdrrc2_config.py:292 mdrrc2_config.py:91
+#: mdrrc2_config.py:307 mdrrc2_config.py:308 mdrrc2_config.py:328
+#: mdrrc2_config.py:113 mdrrc2_config.py:331 mdrrc2_config.py:332
+#: mdrrc2_config.py:352
 msgid "Value"
 msgstr "Waarde"
 
 #: mdrrc2_config.py:223 mdrrc2_config.py:221 mdrrc2_config.py:241
+#: mdrrc2_config.py:277 mdrrc2_config.py:301
 msgid "A config editor for the MDRRC-II system"
 msgstr "Een editor voor de MDRRC-II configuratie"
 
 #: mdrrc2_config.py:223 mdrrc2_config.py:221 mdrrc2_config.py:241
+#: mdrrc2_config.py:277 mdrrc2_config.py:301
 msgid "About Config Editor"
 msgstr "Over het configuratieprogramma"
 
 #: mdrrc2_config.py:239 mdrrc2_config.py:237 mdrrc2_config.py:271
-#: mdrrc2_config.py:272 mdrrc2_config.py:292
+#: mdrrc2_config.py:272 mdrrc2_config.py:292 mdrrc2_config.py:307
+#: mdrrc2_config.py:308 mdrrc2_config.py:328 mdrrc2_config.py:331
+#: mdrrc2_config.py:332 mdrrc2_config.py:352
 msgid "Parameter"
 msgstr "Parameter"
 
 #: mdrrc2_config.py:244 mdrrc2_config.py:242 mdrrc2_config.py:299
+#: mdrrc2_config.py:335 mdrrc2_config.py:359
 msgid "MDRRC-II config editor: Error!"
 msgstr "MDRRC-II configuratie: fout!"
 
 #: mdrrc2_config.py:262 mdrrc2_config.py:261 mdrrc2_config.py:257
-#: mdrrc2_config.py:317
+#: mdrrc2_config.py:317 mdrrc2_config.py:353 mdrrc2_config.py:377
 msgid ""
 "Centrale not in config mode!\n"
 "Make sure MDRRC-II controller is connected and set to config mode (SET-"
@@ -171,7 +190,7 @@ msgstr ""
 #: mdrrc2_config.py:264 mdrrc2_loclist.py:385 mdrrc2_config.py:263
 #: mdrrc2_config.py:259 mdrrc2_loclist.py:434 mdrrc2_loclist.py:457
 #: mdrrc2_loclist.py:458 mdrrc2_config.py:319 mdrrc2_loclist.py:445
-#: mdrrc2_loclist.py:446
+#: mdrrc2_loclist.py:446 mdrrc2_config.py:355 mdrrc2_config.py:379
 msgid "Connection parameters not correct or controller not connected!"
 msgstr "Connectieparameters verkeerd of controller niet aangesloten!"
 
@@ -213,6 +232,7 @@ msgstr "Verwijder een bestaande lok"
 
 #: mdrrc2_loclist.py:75 mdrrc2_config.py:54 mdrrc2_config.py:52
 #: mdrrc2_loclist.py:73 mdrrc2_config.py:57 mdrrc2_loclist.py:76
+#: mdrrc2_config.py:79
 msgid "Store config on controller"
 msgstr "Bewaar configuratie in controller"
 
@@ -275,6 +295,8 @@ msgstr "Geen lokadres geselecteerd!"
 #: mdrrc2_loclist.py:336 mdrrc2_loclist.py:341 mdrrc2_loclist.py:362
 #: mdrrc2_config.py:275 mdrrc2_config.py:281 mdrrc2_loclist.py:323
 #: mdrrc2_loclist.py:328 mdrrc2_loclist.py:349 mdrrc2_loclist.py:350
+#: mdrrc2_config.py:311 mdrrc2_config.py:317 mdrrc2_config.py:335
+#: mdrrc2_config.py:341
 msgid "Error"
 msgstr "Fout"
 
@@ -363,6 +385,7 @@ msgid "Export loco listing"
 msgstr "Exporteer loklijst"
 
 #: mdrrc2_loclist.py:85 mdrrc2_config.py:69 mdrrc2_loclist.py:88
+#: mdrrc2_config.py:91
 msgid "Import"
 msgstr "Importeer"
 
@@ -397,6 +420,7 @@ msgstr " loks..."
 #: mdrrc2_loclist.py:282 mdrrc2_loclist.py:306 mdrrc2_loclist.py:300
 #: mdrrc2_loclist.py:324 mdrrc2_loclist.py:301 mdrrc2_loclist.py:325
 #: mdrrc2_config.py:265 mdrrc2_loclist.py:288 mdrrc2_loclist.py:312
+#: mdrrc2_config.py:301 mdrrc2_config.py:325
 msgid "Time remaining"
 msgstr "Resterende tijd"
 
@@ -408,11 +432,14 @@ msgstr "verwijderen lok "
 #: mdrrc2_loclist.py:296 mdrrc2_loclist.py:278 mdrrc2_loclist.py:314
 #: mdrrc2_loclist.py:315 mdrrc2_config.py:255 mdrrc2_config.py:286
 #: mdrrc2_loclist.py:267 mdrrc2_loclist.py:302 mdrrc2_loclist.py:279
+#: mdrrc2_config.py:291 mdrrc2_config.py:322 mdrrc2_config.py:315
+#: mdrrc2_config.py:346
 msgid "Choose a file"
 msgstr "Kies een bestand"
 
 #: mdrrc2_loclist.py:306 mdrrc2_loclist.py:324 mdrrc2_loclist.py:325
-#: mdrrc2_config.py:265 mdrrc2_loclist.py:312
+#: mdrrc2_config.py:265 mdrrc2_loclist.py:312 mdrrc2_config.py:301
+#: mdrrc2_config.py:325
 msgid "Importing "
 msgstr "importeren van "
 
@@ -422,7 +449,7 @@ msgid "No locos found in file."
 msgstr "Geen loks gevonden in bestand."
 
 #: mdrrc2_loclist.py:335 mdrrc2_loclist.py:336 mdrrc2_config.py:275
-#: mdrrc2_loclist.py:323
+#: mdrrc2_loclist.py:323 mdrrc2_config.py:311 mdrrc2_config.py:335
 msgid "Invalid csv file!"
 msgstr "Ongeldig csv bestand!"
 
@@ -434,23 +461,23 @@ msgstr "Geselecteerde lok = "
 msgid "Loclist exported to "
 msgstr "Loklijst geexporteerd naar "
 
-#: mdrrc2_config.py:69
+#: mdrrc2_config.py:69 mdrrc2_config.py:91
 msgid "Import config"
 msgstr "Importeer configuratie"
 
-#: mdrrc2_config.py:251
+#: mdrrc2_config.py:251 mdrrc2_config.py:287 mdrrc2_config.py:311
 msgid "Config saved to controller"
 msgstr "Configuratie bewaard in controller"
 
-#: mdrrc2_config.py:265
+#: mdrrc2_config.py:265 mdrrc2_config.py:301 mdrrc2_config.py:325
 msgid " settings..."
 msgstr " instellingen..."
 
-#: mdrrc2_config.py:281
+#: mdrrc2_config.py:281 mdrrc2_config.py:317 mdrrc2_config.py:341
 msgid "No valid config items in file."
 msgstr "Geen geldige configuratie in bestand"
 
-#: mdrrc2_config.py:297
+#: mdrrc2_config.py:297 mdrrc2_config.py:333 mdrrc2_config.py:357
 msgid "Config exported to "
 msgstr "Configuratie geexporteerd naar "
 
@@ -461,3 +488,8 @@ msgstr "Ververs"
 #: mdrrc2_loclist.py:96
 msgid "Refresh list"
 msgstr "Ververs lijst"
+
+#: mdrrc2_config.py:79 mdrrc2_config.py:156 mdrrc2_config.py:101
+#: mdrrc2_config.py:178
+msgid "Choose..."
+msgstr "Kies..."

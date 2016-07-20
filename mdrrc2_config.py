@@ -14,6 +14,28 @@ import mdrrc2serial,mdrrcsettings
 # Language suppport
 gettext.install('mdrrc-editor')
 
+def ValtoRGB(value):
+  intvalue = int(value)
+  lower = intvalue & 0x1F
+  middle = int((intvalue & 0x07E0)/2**5)
+  high = int((intvalue & 0xF800)/2**11)
+  result = high * 2**19 + middle * 2**10 + lower * 2**3
+  return result
+
+def ValtoRGBTuple(value):
+  intvalue = int(value)
+  lower = (intvalue & 0x1F) * 2**3
+  middle = (intvalue & 0x07E0)/2**5
+  high = (intvalue & 0xF800)/2**11
+  return (int(lower),int(middle),int(high))
+
+def RGBtoVal(value):
+  lower = ((value) & 0xF8)/2**3
+  middle = ((value) & 0xFC00)/2**5
+  high = ((value) & 0xF80000)/2**8
+  result = lower + middle + high
+  return result
+
 class ConfiglistFrame(wx.Frame, list):
     def __init__(self, parent, list):
         wx.Frame.__init__(self, parent, -1, _("MDRRC-II Config List"), size=(310, 465))
@@ -76,7 +98,7 @@ class ConfiglistFrame(wx.Frame, list):
         Editor_YesNo = wx.grid.GridCellChoiceEditor(['Yes.','No.'], allowOthers=False)
         Editor_EnabledDisabled = wx.grid.GridCellChoiceEditor(['Enabled.','Disabled.'], allowOthers=False)
         Editor_HighLow = wx.grid.GridCellChoiceEditor(['High.','Low.'], allowOthers=False)
-        Editor_Colour = wx.grid.GridCellChoiceEditor(['Choose...'], allowOthers=False)
+        Editor_Colour = wx.grid.GridCellChoiceEditor([_('Choose...')], allowOthers=False)
         
         # Determine size of grid
         NumberOfLines = len(list)
@@ -152,16 +174,15 @@ class ConfiglistFrame(wx.Frame, list):
         global configList
 
         key = self.locgrid.GetCellValue(Row, 0)
-        OldValue = str(configList[key])
-        if (key == 'Text colour' or key == 'Background colour') and (self.locgrid.GetCellValue(Row, 1) == 'Choose...'):
+        OldValue = (configList[key])
+        if (key == 'Text colour' or key == 'Background colour') and (self.locgrid.GetCellValue(Row, 1) == _('Choose...')):
           NewValue = self.OnCC(self, OldValue)
-          configList[key] = NewValue
-          mdrrc2serial.ChangeConfig(key, NewValue, configList)
-          self.locgrid.SetCellValue(Row, 1, NewValue)
+          print OldValue,NewValue
+          configList[key] = str(RGBtoVal(NewValue))
+          self.locgrid.SetCellValue(Row, 1, str(RGBtoVal(NewValue)))
+          mdrrc2serial.ChangeConfig(key, str(hex(NewValue)), configList)         
         else:
-       
         #All cells have a value, regardless of the editor.
-
         # Modify item in list as a result from editing in the grid
                 key = self.locgrid.GetCellValue(Row, 0)
                 OldValue = configList[key]
@@ -259,17 +280,20 @@ class ConfiglistFrame(wx.Frame, list):
             # set indexes 1-N here if you like.
 
             # set the default color in the chooser
-            data.SetColour(wx.Colour(128, 255, 170))
+#            data.SetColour(wx.Colour(128, 255, 170))
+            colourTuple = ValtoRGBTuple(colour)
+            data.SetColour(wx.Colour(colourTuple[2],colourTuple[1],colourTuple[0]))
 
             # construct the chooser
             dlg = wx.ColourDialog(self, data)
 
             if dlg.ShowModal() == wx.ID_OK:
                 color = dlg.GetColourData().Colour
-                NewValue = str(hex(color[2]+256*color[1]+256*256*color[0]))
+                NewValue = (color[2]+256*color[1]+256*256*color[0])
                 return NewValue
             else:
-                return colour
+                NewValue = RGBtoVal(int(colour))
+                return NewValue
             dlg.Destroy()
 
     def OnAbout(self,e):

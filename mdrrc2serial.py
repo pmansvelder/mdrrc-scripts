@@ -86,8 +86,8 @@ def ReadConfig():
   (mdrrc2_port,mdrrc2_baud) = ReadConfigParams()
   configlist = {}
   with serial.Serial(port=mdrrc2_port,baudrate=mdrrc2_baud, timeout=1) as ser:
-    ser.write('STAT\r')
-    configdata = ser.read(2000)
+    ser.write('STAT\r\n')
+    configdata = ser.read(4000)
     ser.close()
   for l in configdata.splitlines():
     if len(l.split(':')) > 1:
