@@ -63,7 +63,7 @@ msgstr " Bewaar wijzigingen"
 
 #: locgrid.py:45
 msgid "E&xit without reset"
-msgstr "Stoppen &zonder herstarten"
+msgstr "Stoppen &zonder herstarten\tCtrl+X"
 
 #: locgrid.py:44
 msgid " Terminate the program"

@@ -32,11 +32,24 @@ class MenuFrame(wx.Frame):
         filemenu= wx.Menu()
 
         # wx.ID_ABOUT and wx.ID_EXIT are standard IDs provided by wxWidgets.
-        menuItem = filemenu.Append(wx.ID_ABOUT, _("&About"),_(" Information about this program"))
+        menuItem = filemenu.Append(wx.ID_ABOUT, _("&About\tCtrl+A"),_(" Information about this program"))
         self.Bind(wx.EVT_MENU, self.OnAbout, menuItem)
+        
+        ID_MENUCONFIG = wx.NewId()
+        menuItem = filemenu.Append(ID_MENUCONFIG, _("Config &Editor\tCtrl+E"),_(" Configuration Editor"))
+        self.Bind(wx.EVT_MENU, self.ConfigEditor, menuItem)
+        
+        ID_LOCLISTMENU = wx.NewId()
+        menuItem = filemenu.Append(ID_LOCLISTMENU, _("&Loclist Editor\tCtrl+L"),_(" Loclist Editor"))
+        self.Bind(wx.EVT_MENU, self.LocListEditor, menuItem)  
+
+        ID_SETTINGSMENU = wx.NewId()
+        menuItem = filemenu.Append(ID_SETTINGSMENU, _("&Settings\tCtrl+S"),_(" Program Settings"))
+        self.Bind(wx.EVT_MENU, self.Settings, menuItem)         
+        
         filemenu.AppendSeparator()
 
-        menuItem = filemenu.Append(wx.ID_EXIT,_("&Quit menu"),_(" Terminate the program"))
+        menuItem = filemenu.Append(wx.ID_EXIT,_("&Quit menu\tCtrl+Q"),_(" Terminate the program"))
         self.Bind(wx.EVT_MENU, self.Quit, menuItem)
 
         # Creating the menubar.
@@ -56,7 +69,7 @@ class MenuFrame(wx.Frame):
         self.Bind(wx.EVT_TOOL, self.LocListEditor, id=ID_LOCLIST)
         
         ID_SETTINGS = wx.NewId()
-        tb.AddLabelTool(id=ID_SETTINGS, label=_('Change Settings'), bitmap=wx.Bitmap('icons/settings.png'), longHelp=_('Change port settings of program'))
+        tb.AddLabelTool(id=ID_SETTINGS, label=_('Change Settings'), bitmap=wx.Bitmap('icons/settings.png'), longHelp=_('Change settings of program'))
         self.Bind(wx.EVT_TOOL, self.Settings, id=ID_SETTINGS)
         
         tb.Realize()

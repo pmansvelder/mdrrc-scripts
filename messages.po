@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-20 21:56+0200\n"
+"POT-Creation-Date: 2016-07-25 16:38+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,8 +24,8 @@ msgstr "MDRRC-II configuratiemenu"
 #: menu.py:30 mdrrc2_config.py:33 mdrrc2_loclist.py:36 menu.py:28
 #: mdrrc2_config.py:31 mdrrc2_loclist.py:34 menu.py:35 mdrrc2_config.py:36
 #: menu.pyw:35 mdrrc2_loclist.py:37 mdrrc2_config.py:58
-msgid "&About"
-msgstr "&Over"
+msgid "&About\tCtrl+A"
+msgstr "&Over\tCtrl+A"
 
 #: menu.py:30 mdrrc2_config.py:33 mdrrc2_loclist.py:36 menu.py:28
 #: mdrrc2_config.py:31 mdrrc2_loclist.py:34 menu.py:35 mdrrc2_config.py:36
@@ -33,47 +33,47 @@ msgstr "&Over"
 msgid " Information about this program"
 msgstr " Informatie over dit programma"
 
-#: menu.py:34 menu.py:32 menu.py:39 menu.pyw:39
-msgid "&Quit menu"
-msgstr "S&top menu"
+#: menu.py:34 menu.py:32 menu.py:39 menu.pyw:39 menu.pyw:48
+msgid "&Quit menu\tCtrl+X"
+msgstr "S&top menu\tCtrl+X"
 
 #: menu.py:34 mdrrc2_config.py:42 mdrrc2_loclist.py:55 menu.py:32
 #: mdrrc2_config.py:40 mdrrc2_loclist.py:53 menu.py:39 mdrrc2_config.py:45
-#: menu.pyw:39 mdrrc2_loclist.py:56 mdrrc2_config.py:67
+#: menu.pyw:39 mdrrc2_loclist.py:56 mdrrc2_config.py:67 menu.pyw:48 menu.pyw:52
 msgid " Terminate the program"
 msgstr " Stop het programma"
 
 #: menu.py:39 mdrrc2_config.py:47 mdrrc2_loclist.py:60 menu.py:37
 #: mdrrc2_config.py:45 mdrrc2_loclist.py:58 menu.py:44 mdrrc2_config.py:50
-#: menu.pyw:44 mdrrc2_loclist.py:61 mdrrc2_config.py:72
+#: menu.pyw:44 mdrrc2_loclist.py:61 mdrrc2_config.py:72 menu.pyw:53 menu.pyw:57
 msgid "&File"
 msgstr "&Bestand"
 
-#: menu.py:46 menu.py:44 menu.py:51 menu.pyw:51
+#: menu.py:46 menu.py:44 menu.py:51 menu.pyw:51 menu.pyw:60 menu.pyw:64
 msgid "Config Editor"
 msgstr "Configuratieprogramma"
 
-#: menu.py:50 menu.py:48 menu.py:55 menu.pyw:55
+#: menu.py:50 menu.py:48 menu.py:55 menu.pyw:55 menu.pyw:64 menu.pyw:68
 msgid "Loclist Editor"
 msgstr "Loklijst bewerken"
 
-#: menu.py:50 menu.py:48 menu.py:55 menu.pyw:55
+#: menu.py:50 menu.py:48 menu.py:55 menu.pyw:55 menu.pyw:64 menu.pyw:68
 msgid "Open Loclist editor"
 msgstr "Open de loklijst"
 
-#: menu.py:54 menu.py:52 menu.py:59 menu.pyw:59
+#: menu.py:54 menu.py:52 menu.py:59 menu.pyw:59 menu.pyw:68 menu.pyw:72
 msgid "Change Settings"
 msgstr "Pas de instellingen aan"
 
-#: menu.py:54 menu.py:52 menu.py:59 menu.pyw:59
+#: menu.py:54 menu.py:52 menu.py:59 menu.pyw:59 menu.pyw:68
 msgid "Change port settings of program"
 msgstr "Pas de instellingen van het programma aan"
 
-#: menu.py:61 menu.py:59 menu.py:67 menu.pyw:67
+#: menu.py:61 menu.py:59 menu.py:67 menu.pyw:67 menu.pyw:76 menu.pyw:80
 msgid "Editors for the MDRRC-II system"
 msgstr "Configuratie MDRRC-II systeem"
 
-#: menu.py:61 menu.py:59 menu.py:67 menu.pyw:67
+#: menu.py:61 menu.py:59 menu.py:67 menu.pyw:67 menu.pyw:76 menu.pyw:80
 msgid "About MDRRC-II Editor"
 msgstr "Over de MDRRC-II configuratie"
 
@@ -376,7 +376,7 @@ msgstr "Filenaam lok export:"
 msgid "Config filename:"
 msgstr "Filenaam config export:"
 
-#: menu.py:46 menu.py:44 menu.py:51 menu.pyw:51
+#: menu.py:46 menu.py:44 menu.py:51 menu.pyw:51 menu.pyw:60 menu.pyw:64
 msgid "Open configuration Editor"
 msgstr "Open het configuratieprogramma"
 
@@ -493,3 +493,39 @@ msgstr "Ververs lijst"
 #: mdrrc2_config.py:178
 msgid "Choose..."
 msgstr "Kies..."
+
+#: menu.pyw:39
+msgid "Config &Editor\tCtrl+E"
+msgstr "Configurati&eprogramma\tCtrl+E"
+
+#: menu.pyw:39
+msgid " Configuration Editor"
+msgstr " Configuratieprogramma"
+
+#: menu.pyw:43
+msgid "&Loclist Editor\tCtrl+L"
+msgstr "&Loklijst bewerken\tCtrl-L"
+
+#: menu.pyw:43
+msgid " Loclist Editor"
+msgstr " Loklijst bewerken"
+
+#: menu.pyw:48 menu.pyw:52
+msgid "&Quit menu\tCtrl+Q"
+msgstr "S&top menu\tCtrl+X"
+
+#: mdrrc2_config.py:58 mdrrc2_loclist.py:37
+msgid "&About"
+msgstr "&Over"
+
+#: menu.pyw:47
+msgid "&Settings\tCtrl+S"
+msgstr "In&stellingen\tCtrl+S"
+
+#: menu.pyw:47
+msgid " Program Settings"
+msgstr " Programmainstellingen"
+
+#: menu.pyw:72
+msgid "Change settings of program"
+msgstr "Pas programmainstellingen aan"
