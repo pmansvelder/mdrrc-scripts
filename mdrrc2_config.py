@@ -55,17 +55,22 @@ class ConfiglistFrame(wx.Frame, list):
         filemenu= wx.Menu()
 
         # wx.ID_ABOUT and wx.ID_EXIT are standard IDs provided by wxWidgets.
-        menuItem = filemenu.Append(wx.ID_ABOUT, _("&About"),_(" Information about this program"))
+        menuItem = filemenu.Append(wx.ID_ABOUT, _("&About\tCtrl+A"),_(" Information about this program"))
         self .Bind(wx.EVT_MENU, self.OnAbout, menuItem)
-        menuItem = filemenu.Append(wx.ID_SAVE, _("&Save and exit"),_(" Save and reboot"))
+        menuItem = filemenu.Append(wx.ID_SAVEAS, _("&Store config\tCtrl+S"),_(" Save without reboot"))
+        self.Bind(wx.EVT_MENU, self.SaveOnly, menuItem)
+        menuItem = filemenu.Append(wx.ID_SAVE, _("Store config and &reset\tCtrl+R"),_(" Save and reboot"))
         self.Bind(wx.EVT_MENU, self.SaveAndReset, menuItem)
-        menuItem2 = filemenu.Append(wx.ID_SAVEAS, _("Save &only"),_(" Save without reboot"))
-        self.Bind(wx.EVT_MENU, self.SaveOnly, menuItem2)
+
+        menuItem = filemenu.Append(wx.ID_FILE1, _("&Export\tCtrl+E"),_(" Export config"))
+        self.Bind(wx.EVT_MENU, self.ExportSave, menuItem)
+        menuItem = filemenu.Append(wx.ID_FILE2, _("&Import\tCtrl+I"),_(" Import config"))
+        self.Bind(wx.EVT_MENU, self.Import, menuItem)
         
         filemenu.AppendSeparator()
         
-        menuItem3 = filemenu.Append(wx.ID_EXIT,_("E&xit without reset"),_(" Terminate the program"))
-        self.Bind(wx.EVT_MENU, self.SaveOnly, menuItem3)
+        menuItem = filemenu.Append(wx.ID_EXIT,_("E&xit without reset\tCtrl+X"),_(" Terminate the program"))
+        self.Bind(wx.EVT_MENU, self.SaveAndQuit, menuItem)
 
         # Creating the menubar.
         menuBar = wx.MenuBar()
@@ -79,7 +84,7 @@ class ConfiglistFrame(wx.Frame, list):
         tb.AddLabelTool(id=ID_SAVE, label=_('Store config'), bitmap=wx.Bitmap('icons/document-save.png'), longHelp=_('Store config on controller'))
         self.Bind(wx.EVT_TOOL, self.SaveOnly, id=ID_SAVE)
         
-        ID_SAVERESET = wx.NewId()        
+        ID_SAVERESET = wx.NewId()
         tb.AddLabelTool(id=ID_SAVERESET, label=_('Store config and reset'), bitmap=wx.Bitmap('icons/document-save-all.png'), longHelp=_('Store config and reset controller'))
         self.Bind(wx.EVT_TOOL, self.SaveAndReset, id=ID_SAVERESET)
      
@@ -309,6 +314,10 @@ class ConfiglistFrame(wx.Frame, list):
     def SaveOnly(self, e):
         mdrrc2serial.StoreConfig()
         UpdateStatus(_('Config saved to controller'))
+ 
+    def SaveAndQuit(self, e):
+        mdrrc2serial.StoreConfig()
+        self.Destroy()
  
     def Import(self, e):
         wildcard = "Comma-separated file (*.csv)|*.csv"

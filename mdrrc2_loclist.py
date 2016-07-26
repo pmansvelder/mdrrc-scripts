@@ -38,22 +38,34 @@ class LoclistFrame(wx.Frame, list):
         self.Bind(wx.EVT_MENU, self.OnAbout, menuItem)
         filemenu.AppendSeparator()
         
-        menuItem = filemenu.Append(wx.ID_NEW, _("&New loco"),_(" Create new loco"))
+        menuItem = filemenu.Append(wx.ID_NEW, _("&New loco\tCtrl+N"),_(" Create new loco"))
         self.Bind(wx.EVT_MENU, self.NewLoco, menuItem)        
         filemenu.AppendSeparator()
 
-        menuItem = filemenu.Append(wx.ID_DELETE, _("&Delete loco"),_(" Delete loco"))
+        menuItem = filemenu.Append(wx.ID_DELETE, _("&Delete loco\tCtrl+D"),_(" Delete loco"))
         self.Bind(wx.EVT_MENU, self.DelLoc, menuItem)        
         filemenu.AppendSeparator()
 
-        menuItem = filemenu.Append(wx.ID_SAVE, _("&Save and exit"),_(" Save and reboot"))
+        menuItem = filemenu.Append(wx.ID_SAVEAS, _("&Store loclist\tCtrl+S"),_(" Save without reboot"))
+        self.Bind(wx.EVT_MENU, self.SaveOnly, menuItem)        
+        
+        menuItem = filemenu.Append(wx.ID_SAVE, _("Store loclist and &reset\tCtrl+R"),_(" Save and reboot"))
         self.Bind(wx.EVT_MENU, self.SaveAndReset, menuItem)
 
-        menuItem = filemenu.Append(wx.ID_SAVEAS, _("Save &only"),_(" Save without reboot"))
-        self.Bind(wx.EVT_MENU, self.SaveOnly, menuItem)
+        menuItem = filemenu.Append(wx.ID_FILE1, _("&Export\tCtrl+E"),_(" Export loco listing"))
+        self.Bind(wx.EVT_MENU, self.ExportSave, menuItem)
+        
+        menuItem = filemenu.Append(wx.ID_FILE2, _("&Import\tCtrl+I"),_(" Import loco listing"))
+        self.Bind(wx.EVT_MENU, self.Import, menuItem)
+
+        menuItem = filemenu.Append(wx.ID_CLEAR, _("Purge\tCtrl+P"),_(" Purge loco listing"))
+        self.Bind(wx.EVT_MENU, self.Refresh, menuItem)        
+        
+        menuItem = filemenu.Append(wx.ID_REFRESH, _("Re&fresh\tCtrl+F"),_(" Refresh loco listing"))
+        self.Bind(wx.EVT_MENU, self.Refresh, menuItem)
         
         filemenu.AppendSeparator()
-        menuItem = filemenu.Append(wx.ID_EXIT,_("E&xit without reset"),_(" Terminate the program"))
+        menuItem = filemenu.Append(wx.ID_EXIT,_("E&xit without reset\Ctrl+X"),_(" Terminate the program"))
         self.Bind(wx.EVT_MENU, self.SaveOnly, menuItem)
 
         # Creating the menubar.
@@ -73,11 +85,11 @@ class LoclistFrame(wx.Frame, list):
         self.Bind(wx.EVT_TOOL, self.DelLoc, id=ID_DELLOCO)
         
         ID_SAVE = wx.NewId()
-        tb.AddLabelTool(id=ID_SAVE, label=_('Store config'), bitmap=wx.Bitmap('icons/document-save.png'), longHelp=_('Store config on controller'))
+        tb.AddLabelTool(id=ID_SAVE, label=_('Store loclist'), bitmap=wx.Bitmap('icons/document-save.png'), longHelp=_('Store config on controller'))
         self.Bind(wx.EVT_TOOL, self.SaveOnly, id=ID_SAVE)
         
         ID_SAVERESET = wx.NewId()
-        tb.AddLabelTool(id=ID_SAVERESET, label=_('Store config and reset'), bitmap=wx.Bitmap('icons/document-save-all.png'), longHelp=_('Store config and reset controller'))
+        tb.AddLabelTool(id=ID_SAVERESET, label=_('Store loclist and reset'), bitmap=wx.Bitmap('icons/document-save-all.png'), longHelp=_('Store loclist and reset controller'))
         self.Bind(wx.EVT_TOOL, self.SaveAndReset, id=ID_SAVERESET)
         
         ID_EXPORT = wx.NewId()
@@ -89,12 +101,12 @@ class LoclistFrame(wx.Frame, list):
         self.Bind(wx.EVT_TOOL, self.Import, id=ID_IMPORT)
         
         ID_PURGE = wx.NewId()
-        tb.AddLabelTool(id=ID_PURGE, label=_('Purge'), bitmap=wx.Bitmap('icons/edit-bomb.png'), longHelp=_('Purge list'))
+        tb.AddLabelTool(id=ID_PURGE, label=_('Purge'), bitmap=wx.Bitmap('icons/edit-bomb.png'), longHelp=_('Purge loco listing'))
         self.Bind(wx.EVT_TOOL, self.Purge, id=ID_PURGE)
         
-        ID_REFRESH = wx.NewId()
-        tb.AddLabelTool(id=ID_REFRESH, label=_('Refresh'), bitmap=wx.Bitmap('icons/view-refresh.png'), longHelp=_('Refresh list'))
-        self.Bind(wx.EVT_TOOL, self.Refresh, id=ID_REFRESH)        
+        ID_REFRESHBUTTON = wx.NewId()
+        tb.AddLabelTool(id=ID_REFRESHBUTTON, label=_('Refresh'), bitmap=wx.Bitmap('icons/view-refresh.png'), longHelp=_('Refresh list'))
+        self.Bind(wx.EVT_TOOL, self.Refresh, id=ID_REFRESHBUTTON)        
                 
         tb.Realize()
 
