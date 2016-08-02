@@ -10,6 +10,7 @@ class Settings(wx.Dialog):
         self.panel = wx.Panel(self)
         self.quote = wx.StaticText(self.panel, label = _("Port settings:"))
         self.exportlabel = wx.StaticText(self.panel, label = _("Export settings:"))
+        self.formatlabel = wx.StaticText(self.panel, label = _("Version-dependent settings:"))
         self.result = wx.StaticText(self.panel, label = "")
         self.result.SetForegroundColour(wx.RED)
         self.button = wx.Button(self.panel, label=_("Save"))
@@ -31,6 +32,10 @@ class Settings(wx.Dialog):
         self.configfileedit = wx.TextCtrl(self.panel, size=(140, -1))
         self.configfileedit.SetValue(self.settings[3])
 
+        self.spacinglabel =  wx.StaticText(self.panel, label=_("Loclist spacing (18 for version <= 3.6.2, else 21):"))
+        self.spacingedit = wx.TextCtrl(self.panel, size=(140, -1))
+        self.spacingedit.SetValue(self.settings[4])
+
         self.windowSizer = wx.BoxSizer()
         self.windowSizer.Add(self.panel, 1, wx.ALL | wx.EXPAND)  
 
@@ -45,8 +50,11 @@ class Settings(wx.Dialog):
         self.sizer.Add(self.filelabel, (5,0))
         self.sizer.Add(self.fileedit, (5,1))
         self.sizer.Add(self.configfilelabel, (6,0))
-        self.sizer.Add(self.configfileedit, (6,1))    
-        self.sizer.Add(self.button, (7, 0), (1, 2), flag=wx.EXPAND)
+        self.sizer.Add(self.configfileedit, (6,1)) 
+        self.sizer.Add(self.formatlabel, (7,0))
+        self.sizer.Add(self.spacinglabel, (8,0))
+        self.sizer.Add(self.spacingedit, (8,1))     
+        self.sizer.Add(self.button, (9, 0), (1, 2), flag=wx.EXPAND)
         
         self.border = wx.BoxSizer()
         self.border.Add(self.sizer, 1, wx.ALL | wx.EXPAND, 5)
@@ -62,12 +70,18 @@ class Settings(wx.Dialog):
         self.settings[1] = self.baudedit.GetValue().encode('ascii','ignore')
         self.settings[2] = self.fileedit.GetValue().encode('ascii','ignore')
         self.settings[3] = self.configfileedit.GetValue().encode('ascii','ignore')
+        self.settings[4] = int(self.spacingedit.GetValue().encode('ascii','ignore'))
         config = cf.ConfigParser()
         config.read('settings.cfg')
         config.set('Connection','port', self.settings[0])
         config.set('Connection','speed', self.settings[1])
         config.set('Export','filename', self.settings[2])
         config.set('Export','configfilename', self.settings[3])
+        try:
+          config.set('Format','spacing', self.settings[4])
+        except:
+          config.add_section('Format')
+          config.set('Format','spacing', self.settings[4])
         with open('settings.cfg', 'wb') as configfile:
           config.write(configfile)
         self.EndModal(wx.ID_OK)
@@ -80,5 +94,8 @@ class Settings(wx.Dialog):
 def ReadConfig(self):
         config = cf.ConfigParser()
         config.read('settings.cfg')
-        settings = [config.get('Connection', 'port').encode('ascii','ignore'), config.get('Connection', 'speed').encode('ascii','ignore'), config.get('Export','filename').encode('ascii','ignore'), config.get('Export','configfilename').encode('ascii','ignore')]
+        try: 
+          settings = [config.get('Connection', 'port').encode('ascii','ignore'), config.get('Connection', 'speed').encode('ascii','ignore'), config.get('Export','filename').encode('ascii','ignore'), config.get('Export','configfilename').encode('ascii','ignore'), config.get('Format','spacing').encode('ascii','ignore')]
+        except:
+          settings = [config.get('Connection', 'port').encode('ascii','ignore'), config.get('Connection', 'speed').encode('ascii','ignore'), config.get('Export','filename').encode('ascii','ignore'), config.get('Export','configfilename').encode('ascii','ignore'), str(18)]
         return settings

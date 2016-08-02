@@ -9,6 +9,15 @@ def ReadConfigParams():
   speed = config.get('Connection', 'speed').encode('ascii','ignore')
   return (port, speed)
 
+def ReadVersionParams():
+  config = cf.ConfigParser()
+  config.read('settings.cfg')
+  try:
+    spacing = int(config.get('Format', 'spacing').encode('ascii','ignore'))
+  except:
+    spacing = 18
+  return (spacing)
+
 def TestConnection():
   (mdrrc2_port,mdrrc2_baud) = ReadConfigParams()
   try:
@@ -34,10 +43,15 @@ def ChangeLocName(address, newname):
     ser.write('LOCNAME '+str(address)+' '+newname+'\r')
     ser.close()
 
-def ChangeLocType(address):
+def ChangeLocType(address, protocol):
   (mdrrc2_port,mdrrc2_baud) = ReadConfigParams()
   with serial.Serial(port=mdrrc2_port,baudrate=mdrrc2_baud, timeout=1) as ser:
-    ser.write('LOCTYPE '+str(address)+'\r')
+    if protocol == 'DCC14':
+      ser.write('14DCC '+str(address)+'\r')
+    elif protocol == 'DCC128':
+      ser.write('128DCC '+str(address)+'\r')
+    else:
+      ser.write('LOCTYPE '+str(address)+'\r')
     ser.close()
 
 def AddLoco(address):
@@ -71,15 +85,19 @@ def StoreConfig():
 def ParseLocList():
   (mdrrc2_port,mdrrc2_baud) = ReadConfigParams()
   loclist = {}
+  spacing = ReadVersionParams()
   locdump=ReceiveLocList().splitlines()
   for d in locdump:
-    for offset in [0,18,36]:
-      a=d[offset:offset+18]
-      if (a[0:4].strip().isdigit()):
-        if (a[5:8]) == 'DCC':
-          loclist[int(a[0:4].strip())]=[a[9:18],'DCC']
-        elif (a[6:8]) == 'MM':
-          loclist[int(a[0:4].strip())]=[a[9:18],'MM']
+    for offset in [0,spacing,spacing*2]:
+      a=d[offset:offset+spacing]
+      if a != '' :
+              listitem = a.split(None,2)
+              if listitem:
+                if (listitem[0]).isdigit():
+                  try:
+                    loclist[listitem[0]]=[listitem[2],listitem[1]]
+                  except:
+                    loclist[listitem[0]]=['',listitem[1]] 
   return loclist
 
 def ReadConfig():
@@ -128,3 +146,12 @@ def ChangeConfig(key, value, configlist):
         elif k == 'Background colour':
           ser.write('CB'+str(value)+'\r')
         ser.close()
+        
+def SendCommand(command):
+  (mdrrc2_port,mdrrc2_baud) = ReadConfigParams()
+  with serial.Serial(port=mdrrc2_port,baudrate=mdrrc2_baud, timeout=1) as ser:
+    ser.write(command)
+    message = ser.read(63)
+    for i in range(0, len(message)):
+      print i,':',hex(ord(message[i])),'/',bin(ord(message[i]))
+    ser.close()

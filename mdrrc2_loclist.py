@@ -14,6 +14,9 @@ import mdrrc2serial,mdrrcsettings
 # Language suppport
 gettext.install('mdrrc-editor')
 
+global ProtocolEditor
+ProtocolEditor = wx.grid.GridCellChoiceEditor(['DCC', 'DCC14', 'DCC128','MM'], allowOthers=False)
+
 class LoclistFrame(wx.Frame, list):
 
     def __init__(self, parent, list):
@@ -111,7 +114,7 @@ class LoclistFrame(wx.Frame, list):
         tb.Realize()
 
         #Create an editor for the protocol selection
-        ProtocolEditor = wx.grid.GridCellChoiceEditor(['DCC','MM'], allowOthers=False)
+#        ProtocolEditor = wx.grid.GridCellChoiceEditor(['DCC', 'DCC14', 'DCC128','MM'], allowOthers=False)
 
         # Determine size of grid
         NumberOfLines = len(list)
@@ -160,6 +163,7 @@ class LoclistFrame(wx.Frame, list):
 
     def Refresh(self, event):
         self.Destroy()
+        global listoflocs
         listoflocs = mdrrc2serial.ParseLocList()
         frame = LoclistFrame(None, listoflocs)
         
@@ -187,11 +191,15 @@ class LoclistFrame(wx.Frame, list):
 
         # Modify item in list as a result from editing in the grid
         key = self.locgrid.GetCellValue(Row, 0)
-        listoflocs[int(key)][Col-1] = self.locgrid.GetCellValue(Row, Col).encode('ascii','ignore')
+        value = self.locgrid.GetCellValue(Row, Col).encode()
+        oldvalue = listoflocs[str(int(key))][Col-1]
+
+        listoflocs[str(int(key))][Col-1] = value
+        
         if Col == 1:
-           mdrrc2serial.ChangeLocName(int(key),self.locgrid.GetCellValue(Row, Col).encode())
+           mdrrc2serial.ChangeLocName(int(key),value)
         elif Col == 2:
-           mdrrc2serial.ChangeLocType(int(key))
+           mdrrc2serial.ChangeLocType(int(key),value)
            
         CountLocs(listoflocs,sb)
         event.Skip()
@@ -336,17 +344,19 @@ class LoclistFrame(wx.Frame, list):
                         dialog = wx.ProgressDialog(_("Importing ")+str(progressMax)+_(" locos..."), _("Time remaining"), progressMax, style=wx.PD_APP_MODAL | wx.PD_ELAPSED_TIME | wx.PD_REMAINING_TIME | wx.PD_AUTO_HIDE)    
                         count = 0
                         for row in reader:
-                                count += 1
-                                try:
+
+#                                try:
                                         mdrrc2serial.AddLoco(row[_('Adress')])
                                         mdrrc2serial.ChangeLocName(row[_('Adress')],row[_('Name')])
-                                        if mdrrc2serial.ParseLocList()[int(row[_('Adress')])][1] != row[_('Protocol')]:
-                                                mdrrc2serial.ChangeLocType(row[_('Adress')])
+                                        print row[_('Adress')],row[_('Name')]
+                                        if mdrrc2serial.ParseLocList()[str(int(row[_('Adress')]))][1] != row[_('Protocol')]:
+                                                mdrrc2serial.ChangeLocType(row[_('Adress')],row[_('Protocol')])
+                                        count += 1
                                         dialog.Update(count)
-                                except:
-                                        dlg = wx.MessageDialog(self, _("Invalid csv file!"),_("Error"), wx.OK|wx.ICON_WARNING)
-                                        result = dlg.ShowModal()
-                                        break
+#                                except:
+#                                        dlg = wx.MessageDialog(self, _("Invalid csv file!"),_("Error"), wx.OK|wx.ICON_WARNING)
+#                                        result = dlg.ShowModal()
+#                                        break
                 dialog.Destroy()
         else:
                dlg = wx.MessageDialog( self, _("No locos found in file."), _("Error"), wx.OK)
@@ -423,7 +433,9 @@ class NewLocoDialog(wx.Dialog):
         self.Destroy()        
 
 def BuildLocoGrid(list,locgrid):
-  ProtocolEditor = wx.grid.GridCellChoiceEditor(['DCC','MM'], allowOthers=False)
+  global ProtocolEditor
+  ProtocolEditor = wx.grid.GridCellChoiceEditor(['DCC', 'DCC14', 'DCC128','MM'], allowOthers=False)
+#  ProtocolEditor = wx.grid.GridCellChoiceEditor(['DCC','MM'], allowOthers=False)
   for l, (index) in enumerate(zip(list)):
     locgrid.SetCellValue(l, 0, str(index[0]))
     locgrid.SetReadOnly(l, 0, True)
@@ -443,10 +455,10 @@ def CountLocs(list, sb):
   NumberOfDCCLocs = 0
   NumberOfMMLocs = 0
   for l in enumerate(list):
-    if (list[l[1]][1] == 'DCC'):
-      NumberOfDCCLocs += 1
-    else:
+    if (list[l[1]][1] == 'MM'):
       NumberOfMMLocs += 1
+    else:
+      NumberOfDCCLocs += 1
   sb.SetStatusText(_('Current loc addresses: ')+str(NumberOfDCCLocs)+' DCC / '+str(NumberOfMMLocs)+' MM') 
 
 def Foutmelding(parent, message, caption = _('MDRRC-II loc editor: Error!')):
