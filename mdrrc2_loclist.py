@@ -14,9 +14,6 @@ import mdrrc2serial,mdrrcsettings
 # Language suppport
 gettext.install('mdrrc-editor')
 
-global ProtocolEditor
-ProtocolEditor = wx.grid.GridCellChoiceEditor(['DCC', 'DCC14', 'DCC128','MM'], allowOthers=False)
-
 class LoclistFrame(wx.Frame, list):
 
     def __init__(self, parent, list):
@@ -114,7 +111,7 @@ class LoclistFrame(wx.Frame, list):
         tb.Realize()
 
         #Create an editor for the protocol selection
-#        ProtocolEditor = wx.grid.GridCellChoiceEditor(['DCC', 'DCC14', 'DCC128','MM'], allowOthers=False)
+        ProtocolEditor = ProtocolChoice()
 
         # Determine size of grid
         NumberOfLines = len(list)
@@ -321,7 +318,7 @@ class LoclistFrame(wx.Frame, list):
                 count = 0
                 for l in listoflocs:
                         count += 1
-                        if l != 1:
+                        if int(l) != 1:
                                 dialog.title = _("removing loco ")+str(l)
                                 mdrrc2serial.RemoveLoco(l)  
                         dialog.Update(count)
@@ -348,7 +345,6 @@ class LoclistFrame(wx.Frame, list):
 #                                try:
                                         mdrrc2serial.AddLoco(row[_('Adress')])
                                         mdrrc2serial.ChangeLocName(row[_('Adress')],row[_('Name')])
-                                        print row[_('Adress')],row[_('Name')]
                                         if mdrrc2serial.ParseLocList()[str(int(row[_('Adress')]))][1] != row[_('Protocol')]:
                                                 mdrrc2serial.ChangeLocType(row[_('Adress')],row[_('Protocol')])
                                         count += 1
@@ -432,24 +428,29 @@ class NewLocoDialog(wx.Dialog):
     def OnCancel(self, e):
         self.Destroy()        
 
+def ProtocolChoice():
+  spacing = mdrrc2serial.ReadVersionParams()
+  if spacing == 21:
+    Editor = wx.grid.GridCellChoiceEditor(['DCC', 'DCC14', 'DCC128','MM'], allowOthers=False)
+  else:
+    Editor = wx.grid.GridCellChoiceEditor(['DCC','MM'], allowOthers=False)
+  return Editor
+
 def BuildLocoGrid(list,locgrid):
   global ProtocolEditor
-  ProtocolEditor = wx.grid.GridCellChoiceEditor(['DCC', 'DCC14', 'DCC128','MM'], allowOthers=False)
-#  ProtocolEditor = wx.grid.GridCellChoiceEditor(['DCC','MM'], allowOthers=False)
-  for l, (index) in enumerate(zip(list)):
-    locgrid.SetCellValue(l, 0, str(index[0]))
-    locgrid.SetReadOnly(l, 0, True)
-    locgrid.SetCellValue(l, 1, list[index[0]][0])
-    locgrid.SetCellValue(l, 2, list[index[0]][1])
-    locgrid.SetCellEditor(l, 2, ProtocolEditor)
+  ProtocolEditor = ProtocolChoice()
+  keylist = sorted(list.keys(), key=int)
+  counter = 0
+  for l in keylist:
+    locgrid.SetCellValue(counter, 0, str(l))
+    locgrid.SetReadOnly(counter, 0, True)
+    locgrid.SetCellValue(counter, 1, list[l][0])
+    locgrid.SetCellValue(counter, 2, list[l][1])
+    locgrid.SetCellEditor(counter, 2, ProtocolEditor)
+    counter += 1
 
 def UpdateStatus(text):
   sb.SetStatusText(text)
-
-def PrintLocList(loclist):
-  print("Address".ljust(10)+"Name".ljust(10)+"Protocol")
-  for l in loclist:
-    print(str(l).ljust(10)+loclist[l][0].ljust(10)+loclist[l][1])
 
 def CountLocs(list, sb):
   NumberOfDCCLocs = 0

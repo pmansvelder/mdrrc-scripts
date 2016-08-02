@@ -2,6 +2,8 @@ import wx
 import ConfigParser as cf
 import os
 #
+# To do: check for empty settings, setup defaults
+#
 class Settings(wx.Dialog):
     def __init__(self, settings, *args, **kwargs):
         wx.Dialog.__init__(self, *args, **kwargs)
@@ -32,7 +34,7 @@ class Settings(wx.Dialog):
         self.configfileedit = wx.TextCtrl(self.panel, size=(140, -1))
         self.configfileedit.SetValue(self.settings[3])
 
-        self.spacinglabel =  wx.StaticText(self.panel, label=_("Loclist spacing (18 for version <= 3.6.2, else 21):"))
+        self.spacinglabel =  wx.StaticText(self.panel, label=_("Loclist spacing (do not edit!):"))
         self.spacingedit = wx.TextCtrl(self.panel, size=(140, -1))
         self.spacingedit.SetValue(self.settings[4])
 

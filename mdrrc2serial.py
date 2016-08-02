@@ -25,6 +25,14 @@ def TestConnection():
       ser.write('HELP\r')
       locdata = ser.read(2000)
       ser.close()
+      config = cf.ConfigParser()
+      config.read('settings.cfg')
+      if "128DCC" in locdata:
+        config.set('Format','spacing', '21')
+      else:
+        config.set('Format','spacing', '18')
+      with open('settings.cfg', 'wb') as configfile:
+        config.write(configfile)
       return True
   except:
       return False
@@ -88,16 +96,18 @@ def ParseLocList():
   spacing = ReadVersionParams()
   locdump=ReceiveLocList().splitlines()
   for d in locdump:
-    for offset in [0,spacing,spacing*2]:
-      a=d[offset:offset+spacing]
-      if a != '' :
-              listitem = a.split(None,2)
-              if listitem:
-                if (listitem[0]).isdigit():
-                  try:
-                    loclist[listitem[0]]=[listitem[2],listitem[1]]
-                  except:
-                    loclist[listitem[0]]=['',listitem[1]] 
+    if d != '':
+      if d.split()[0].isdigit():
+        for offset in [0,spacing,spacing*2]:
+          a=d[offset:offset+spacing]
+          if a != '' :
+            listitem = a.split(None,2)
+            if listitem:
+              if (listitem[0]).isdigit():
+                try:
+                  loclist[listitem[0]]=[listitem[2],listitem[1]]
+                except:
+                  loclist[listitem[0]]=['',listitem[1]] 
   return loclist
 
 def ReadConfig():

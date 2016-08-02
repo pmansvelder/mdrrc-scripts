@@ -182,7 +182,6 @@ class ConfiglistFrame(wx.Frame, list):
         OldValue = (configList[key])
         if (key == 'Text colour' or key == 'Background colour') and (self.locgrid.GetCellValue(Row, 1) == _('Choose...')):
           NewValue = self.OnCC(self, OldValue)
-          print OldValue,NewValue
           configList[key] = str(RGBtoVal(NewValue))
           self.locgrid.SetCellValue(Row, 1, str(RGBtoVal(NewValue)))
           mdrrc2serial.ChangeConfig(key, str(hex(NewValue)), configList)         
