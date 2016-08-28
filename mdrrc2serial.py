@@ -160,8 +160,15 @@ def ChangeConfig(key, value, configlist):
 def SendCommand(command):
   (mdrrc2_port,mdrrc2_baud) = ReadConfigParams()
   with serial.Serial(port=mdrrc2_port,baudrate=mdrrc2_baud, timeout=1) as ser:
+    print "Sending bytes:",
+    for i in range(0, len(command)):
+      print hex(ord(command[i])),
+    print "<end>"
     ser.write(command)
     message = ser.read(63)
+    print "Receiving bytes:",
     for i in range(0, len(message)):
-      print i,':',hex(ord(message[i])),'/',bin(ord(message[i]))
+      print hex(ord(message[i])),
+    print "<end>"
     ser.close()
+    return message
