@@ -77,7 +77,7 @@ class MenuFrame(wx.Frame):
     
     def OnAbout(self,e):
         # A message dialog box with an OK button. wx.OK is a standard ID in wxWidgets.
-        dlg = wx.MessageDialog( self, _("Editors for the MDRRC-II system"), _("About MDRRC-II Editor"), wx.OK)
+        dlg = wx.MessageDialog( self, _("Editors for the MDRRC-II system\nVersion 0.2"), _("About MDRRC-II Editor"), wx.OK)
         dlg.ShowModal() # Show it
         dlg.Destroy() # finally destroy it when finished.
 

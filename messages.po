@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-28 19:20+0200\n"
+"POT-Creation-Date: 2016-08-29 00:26+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,10 +54,6 @@ msgstr "Open de loklijst"
 #: menu.pyw:72
 msgid "Change Settings"
 msgstr "Pas de instellingen aan"
-
-#: menu.pyw:80
-msgid "Editors for the MDRRC-II system"
-msgstr "Configuratie MDRRC-II systeem"
 
 #: menu.pyw:80
 msgid "About MDRRC-II Editor"
@@ -456,7 +452,7 @@ msgstr " Loklijst bewerken"
 
 #: menu.pyw:52
 msgid "&Quit menu\tCtrl+Q"
-msgstr "S&top menu\tCtrl+X"
+msgstr "S&top menu\tCtrl+Q"
 
 #: mdrrc2_config.py:58 mdrrc2_loclist.py:37
 msgid "&About"
@@ -569,3 +565,11 @@ msgstr "Versie-afhankelijke instellingen:"
 #: mdrrcsettings.py:37
 msgid "Loclist spacing (do not edit!):"
 msgstr "Spatiering loklijst (niet wijzigen!):"
+
+#: menu.pyw:80
+msgid ""
+"Editors for the MDRRC-II system\n"
+"Version 0.2"
+msgstr ""
+"Configuratie MDRRC-II systeem\n"
+"Versie 0.2"
