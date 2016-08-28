@@ -1,0 +1,2 @@
+29-aug-2016: added support for firmware 3.7.x, with DCC 14 and 128 steps
+
