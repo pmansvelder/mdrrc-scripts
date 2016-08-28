@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-26 12:14+0200\n"
+"POT-Creation-Date: 2016-08-28 19:20+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -121,6 +121,7 @@ msgstr "Parameter"
 #: mdrrc2_config.py:352 mdrrc2_config.py:117 mdrrc2_config.py:335
 #: mdrrc2_config.py:336 mdrrc2_config.py:356 mdrrc2_config.py:118
 #: mdrrc2_config.py:340 mdrrc2_config.py:341 mdrrc2_config.py:361
+#: mdrrc2_config.py:339 mdrrc2_config.py:360
 msgid "Value"
 msgstr "Waarde"
 
@@ -135,14 +136,17 @@ msgstr "Over het configuratieprogramma"
 #: mdrrc2_config.py:331 mdrrc2_config.py:332 mdrrc2_config.py:352
 #: mdrrc2_config.py:335 mdrrc2_config.py:336 mdrrc2_config.py:356
 #: mdrrc2_config.py:340 mdrrc2_config.py:341 mdrrc2_config.py:361
+#: mdrrc2_config.py:339 mdrrc2_config.py:360
 msgid "Parameter"
 msgstr "Parameter"
 
 #: mdrrc2_config.py:359 mdrrc2_config.py:363 mdrrc2_config.py:368
+#: mdrrc2_config.py:367
 msgid "MDRRC-II config editor: Error!"
 msgstr "MDRRC-II configuratie: fout!"
 
 #: mdrrc2_config.py:377 mdrrc2_config.py:381 mdrrc2_config.py:386
+#: mdrrc2_config.py:385
 msgid ""
 "Centrale not in config mode!\n"
 "Make sure MDRRC-II controller is connected and set to config mode (SET-"
@@ -153,7 +157,8 @@ msgstr ""
 "staat (SET->CON)"
 
 #: mdrrc2_config.py:379 mdrrc2_loclist.py:457 mdrrc2_config.py:383
-#: mdrrc2_config.py:388 mdrrc2_loclist.py:469
+#: mdrrc2_config.py:388 mdrrc2_loclist.py:469 mdrrc2_config.py:387
+#: mdrrc2_loclist.py:482
 msgid "Connection parameters not correct or controller not connected!"
 msgstr "Connectieparameters verkeerd of controller niet aangesloten!"
 
@@ -204,37 +209,39 @@ msgstr "Adres"
 
 #: mdrrc2_loclist.py:114 mdrrc2_loclist.py:286 mdrrc2_loclist.py:330
 #: mdrrc2_loclist.py:126 mdrrc2_loclist.py:298 mdrrc2_loclist.py:342
+#: mdrrc2_loclist.py:303 mdrrc2_loclist.py:347
 msgid "Name"
 msgstr "Naam"
 
 #: mdrrc2_loclist.py:115 mdrrc2_loclist.py:286 mdrrc2_loclist.py:331
 #: mdrrc2_loclist.py:127 mdrrc2_loclist.py:298 mdrrc2_loclist.py:343
+#: mdrrc2_loclist.py:303 mdrrc2_loclist.py:348 mdrrc2_loclist.py:349
 msgid "Protocol"
 msgstr "Protocol"
 
-#: mdrrc2_loclist.py:266 mdrrc2_loclist.py:278
+#: mdrrc2_loclist.py:266 mdrrc2_loclist.py:278 mdrrc2_loclist.py:283
 msgid "A loc editor for the MDRRC-II system"
 msgstr "Een editor voor de MDRRC-II lok lijst"
 
-#: mdrrc2_loclist.py:266 mdrrc2_loclist.py:278
+#: mdrrc2_loclist.py:266 mdrrc2_loclist.py:278 mdrrc2_loclist.py:283
 msgid "About Loc Editor"
 msgstr "Over dit programma"
 
 #: mdrrc2_loclist.py:346 mdrrc2_loclist.py:372 mdrrc2_loclist.py:358
-#: mdrrc2_loclist.py:384
+#: mdrrc2_loclist.py:384 mdrrc2_loclist.py:364 mdrrc2_loclist.py:390
 msgid "New Loco Address"
 msgstr "Nieuw lokadres"
 
-#: mdrrc2_loclist.py:353 mdrrc2_loclist.py:365
+#: mdrrc2_loclist.py:353 mdrrc2_loclist.py:365 mdrrc2_loclist.py:371
 msgid "Do you really want to delete loco "
 msgstr "Weet u zeker dat u deze lok wilt wissen: "
 
 #: mdrrc2_loclist.py:295 mdrrc2_loclist.py:354 mdrrc2_loclist.py:307
-#: mdrrc2_loclist.py:366
+#: mdrrc2_loclist.py:366 mdrrc2_loclist.py:312 mdrrc2_loclist.py:372
 msgid "Klik OK to confirm"
 msgstr "Klik op OK om te verwijderen"
 
-#: mdrrc2_loclist.py:361 mdrrc2_loclist.py:373
+#: mdrrc2_loclist.py:361 mdrrc2_loclist.py:373 mdrrc2_loclist.py:379
 msgid "No loco selected!"
 msgstr "Geen lokadres geselecteerd!"
 
@@ -242,10 +249,12 @@ msgstr "Geen lokadres geselecteerd!"
 #: mdrrc2_loclist.py:340 mdrrc2_loclist.py:361 mdrrc2_config.py:339
 #: mdrrc2_config.py:345 mdrrc2_config.py:344 mdrrc2_config.py:350
 #: mdrrc2_loclist.py:347 mdrrc2_loclist.py:352 mdrrc2_loclist.py:373
+#: mdrrc2_config.py:343 mdrrc2_config.py:349 mdrrc2_loclist.py:358
+#: mdrrc2_loclist.py:379
 msgid "Error"
 msgstr "Fout"
 
-#: mdrrc2_loclist.py:379 mdrrc2_loclist.py:391
+#: mdrrc2_loclist.py:379 mdrrc2_loclist.py:391 mdrrc2_loclist.py:397
 msgid "Loco"
 msgstr "Lok"
 
@@ -253,26 +262,29 @@ msgstr "Lok"
 #: mdrrc2_loclist.py:331 mdrrc2_loclist.py:332 mdrrc2_loclist.py:384
 #: mdrrc2_loclist.py:298 mdrrc2_loclist.py:341 mdrrc2_loclist.py:342
 #: mdrrc2_loclist.py:343 mdrrc2_loclist.py:344 mdrrc2_loclist.py:396
+#: mdrrc2_loclist.py:303 mdrrc2_loclist.py:346 mdrrc2_loclist.py:347
+#: mdrrc2_loclist.py:348 mdrrc2_loclist.py:349 mdrrc2_loclist.py:402
 msgid "Adress"
 msgstr "Adres"
 
 #: mdrrc2_loclist.py:393 mdrrcsettings.py:15 mdrrc2_loclist.py:405
+#: mdrrc2_loclist.py:411 mdrrcsettings.py:18
 msgid "Save"
 msgstr "Bewaar"
 
-#: mdrrc2_loclist.py:394 mdrrc2_loclist.py:406
+#: mdrrc2_loclist.py:394 mdrrc2_loclist.py:406 mdrrc2_loclist.py:412
 msgid "Cancel"
 msgstr "Annuleer"
 
-#: mdrrc2_loclist.py:438 mdrrc2_loclist.py:450
+#: mdrrc2_loclist.py:438 mdrrc2_loclist.py:450 mdrrc2_loclist.py:463
 msgid "Current loc addresses: "
 msgstr "Huidige lokadressen: "
 
-#: mdrrc2_loclist.py:440 mdrrc2_loclist.py:452
+#: mdrrc2_loclist.py:440 mdrrc2_loclist.py:452 mdrrc2_loclist.py:465
 msgid "MDRRC-II loc editor: Error!"
 msgstr "MDRRC-II lokeditor: fout!"
 
-#: mdrrc2_loclist.py:455 mdrrc2_loclist.py:467
+#: mdrrc2_loclist.py:455 mdrrc2_loclist.py:467 mdrrc2_loclist.py:480
 msgid ""
 "Centrale not in config mode or not connected!\n"
 "Make sure MDRRC-II controller is connected and set to config mode (SET-"
@@ -282,31 +294,31 @@ msgstr ""
 "Zorg ervoor dat de MDRRC-II controller aangesloten is en in config mode "
 "staat (SET->CON)"
 
-#: mdrrcsettings.py:8
+#: mdrrcsettings.py:8 mdrrcsettings.py:10
 msgid "Program Settings"
 msgstr "Programmainstellingen"
 
-#: mdrrcsettings.py:11
+#: mdrrcsettings.py:11 mdrrcsettings.py:13
 msgid "Port settings:"
 msgstr "Poortinstellingen"
 
-#: mdrrcsettings.py:12
+#: mdrrcsettings.py:12 mdrrcsettings.py:14
 msgid "Export settings:"
 msgstr "Export instellingen"
 
-#: mdrrcsettings.py:18
+#: mdrrcsettings.py:18 mdrrcsettings.py:21
 msgid "Port name:"
 msgstr "Poortnaam:"
 
-#: mdrrcsettings.py:22
+#: mdrrcsettings.py:22 mdrrcsettings.py:25
 msgid "Baud rate:"
 msgstr "Snelheid:"
 
-#: mdrrcsettings.py:26
+#: mdrrcsettings.py:26 mdrrcsettings.py:29
 msgid "Export filename:"
 msgstr "Filenaam lok export:"
 
-#: mdrrcsettings.py:30
+#: mdrrcsettings.py:30 mdrrcsettings.py:33
 msgid "Config filename:"
 msgstr "Filenaam config export:"
 
@@ -335,55 +347,58 @@ msgstr "Maak leeg"
 msgid "Purge list"
 msgstr "Maak de loklijst leeg"
 
-#: mdrrc2_loclist.py:294 mdrrc2_loclist.py:306
+#: mdrrc2_loclist.py:294 mdrrc2_loclist.py:306 mdrrc2_loclist.py:311
 msgid "Do you really want to delete all locos (only loco 1 will remain) ?"
 msgstr "Wil je werkelijk alle loks verwijderen (alleen lok 1 blijft staan) ?"
 
-#: mdrrc2_loclist.py:300 mdrrc2_loclist.py:312
+#: mdrrc2_loclist.py:300 mdrrc2_loclist.py:312 mdrrc2_loclist.py:317
 msgid "Removing "
 msgstr "Verwijderen van "
 
 #: mdrrc2_loclist.py:300 mdrrc2_loclist.py:324 mdrrc2_loclist.py:312
-#: mdrrc2_loclist.py:336
+#: mdrrc2_loclist.py:336 mdrrc2_loclist.py:317 mdrrc2_loclist.py:341
 msgid " locos..."
 msgstr " loks..."
 
 #: mdrrc2_config.py:325 mdrrc2_loclist.py:300 mdrrc2_loclist.py:324
 #: mdrrc2_config.py:329 mdrrc2_config.py:334 mdrrc2_loclist.py:312
-#: mdrrc2_loclist.py:336
+#: mdrrc2_loclist.py:336 mdrrc2_config.py:333 mdrrc2_loclist.py:317
+#: mdrrc2_loclist.py:341
 msgid "Time remaining"
 msgstr "Resterende tijd"
 
-#: mdrrc2_loclist.py:305 mdrrc2_loclist.py:317
+#: mdrrc2_loclist.py:305 mdrrc2_loclist.py:317 mdrrc2_loclist.py:322
 msgid "removing loco "
 msgstr "verwijderen lok "
 
 #: mdrrc2_config.py:315 mdrrc2_config.py:346 mdrrc2_loclist.py:279
 #: mdrrc2_loclist.py:314 mdrrc2_config.py:319 mdrrc2_config.py:350
 #: mdrrc2_config.py:324 mdrrc2_config.py:355 mdrrc2_loclist.py:291
-#: mdrrc2_loclist.py:326
+#: mdrrc2_loclist.py:326 mdrrc2_config.py:323 mdrrc2_config.py:354
+#: mdrrc2_loclist.py:296 mdrrc2_loclist.py:331
 msgid "Choose a file"
 msgstr "Kies een bestand"
 
 #: mdrrc2_config.py:325 mdrrc2_loclist.py:324 mdrrc2_config.py:329
-#: mdrrc2_config.py:334 mdrrc2_loclist.py:336
+#: mdrrc2_config.py:334 mdrrc2_loclist.py:336 mdrrc2_config.py:333
+#: mdrrc2_loclist.py:341
 msgid "Importing "
 msgstr "importeren van "
 
-#: mdrrc2_loclist.py:340 mdrrc2_loclist.py:352
+#: mdrrc2_loclist.py:340 mdrrc2_loclist.py:352 mdrrc2_loclist.py:358
 msgid "No locos found in file."
 msgstr "Geen loks gevonden in bestand."
 
 #: mdrrc2_config.py:335 mdrrc2_loclist.py:335 mdrrc2_config.py:339
-#: mdrrc2_config.py:344 mdrrc2_loclist.py:347
+#: mdrrc2_config.py:344 mdrrc2_loclist.py:347 mdrrc2_config.py:343
 msgid "Invalid csv file!"
 msgstr "Ongeldig csv bestand!"
 
-#: mdrrc2_loclist.py:160 mdrrc2_loclist.py:172
+#: mdrrc2_loclist.py:160 mdrrc2_loclist.py:172 mdrrc2_loclist.py:173
 msgid "Selected loco = "
 msgstr "Geselecteerde lok = "
 
-#: mdrrc2_loclist.py:291 mdrrc2_loclist.py:303
+#: mdrrc2_loclist.py:291 mdrrc2_loclist.py:303 mdrrc2_loclist.py:308
 msgid "Loclist exported to "
 msgstr "Loklijst geexporteerd naar "
 
@@ -396,14 +411,17 @@ msgid "Config saved to controller"
 msgstr "Configuratie bewaard in controller"
 
 #: mdrrc2_config.py:325 mdrrc2_config.py:329 mdrrc2_config.py:334
+#: mdrrc2_config.py:333
 msgid " settings..."
 msgstr " instellingen..."
 
 #: mdrrc2_config.py:341 mdrrc2_config.py:345 mdrrc2_config.py:350
+#: mdrrc2_config.py:349
 msgid "No valid config items in file."
 msgstr "Geen geldige configuratie in bestand"
 
 #: mdrrc2_config.py:357 mdrrc2_config.py:361 mdrrc2_config.py:366
+#: mdrrc2_config.py:365
 msgid "Config exported to "
 msgstr "Configuratie geexporteerd naar "
 
@@ -543,3 +561,11 @@ msgstr "Maak loklijst leeg"
 #: mdrrc2_loclist.py:68
 msgid "E&xit without reset\\Ctrl+X"
 msgstr "Stoppen zonder reset\tCtrl+X"
+
+#: mdrrcsettings.py:15
+msgid "Version-dependent settings:"
+msgstr "Versie-afhankelijke instellingen:"
+
+#: mdrrcsettings.py:37
+msgid "Loclist spacing (do not edit!):"
+msgstr "Spatiering loklijst (niet wijzigen!):"
