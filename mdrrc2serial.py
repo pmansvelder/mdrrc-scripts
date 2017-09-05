@@ -120,7 +120,7 @@ def ReadConfig():
   for l in configdata.splitlines():
     if len(l.split(':')) > 1:
       key = l.split(':')[0].strip()
-      value = l.split(':')[1].strip()
+      value = l.split(':',1)[1].strip()
       configlist[key]=value
   return configlist
 
@@ -155,6 +155,16 @@ def ChangeConfig(key, value, configlist):
           ser.write('CF'+str(value)+'\r')
         elif k == 'Background colour':
           ser.write('CB'+str(value)+'\r')
+        elif k == 'Network':
+          ser.write('NETWORK'+'\r')
+        elif k == 'IP Adress':
+          ser.write('IP'+str(value)+'\r')
+        elif k == 'IP Netmask':
+          ser.write('MASK'+str(value)+'\r')
+        elif k == 'IP Gateway':
+          ser.write('GATEWAY'+str(value)+'\r')
+        elif k == 'MAC Address':
+          ser.write('MAC'+str(value)+'\r')
         ser.close()
         
 def SendCommand(command):

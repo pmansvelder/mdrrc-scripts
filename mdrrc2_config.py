@@ -127,7 +127,7 @@ class ConfiglistFrame(wx.Frame, list):
             self.locgrid.SetCellEditor(i, 1, Editor_OnOff)
           elif (l == 'Touch calibrated') or (l == 'MM locs only'):
             self.locgrid.SetCellEditor(i, 1, Editor_YesNo)
-          elif (l == 'Booster S/C enable') or (l == 'Acknowlegde enable') or (l == 'I2C manual control'):
+          elif (l == 'Booster S/C enable') or (l == 'Acknowlegde enable') or (l == 'I2C manual control') or (l == 'Network'):
             self.locgrid.SetCellEditor(i, 1, Editor_EnabledDisabled)
           elif (l == 'Booster S/C change'):
             self.locgrid.SetCellEditor(i, 1, Editor_HighLow)
@@ -184,7 +184,7 @@ class ConfiglistFrame(wx.Frame, list):
           NewValue = self.OnCC(self, OldValue)
           configList[key] = str(RGBtoVal(NewValue))
           self.locgrid.SetCellValue(Row, 1, str(RGBtoVal(NewValue)))
-          mdrrc2serial.ChangeConfig(key, str(hex(NewValue)), configList)         
+          mdrrc2serial.ChangeConfig(key, str(hex(NewValue)), configList)
         else:
         #All cells have a value, regardless of the editor.
         # Modify item in list as a result from editing in the grid
