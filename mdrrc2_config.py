@@ -38,7 +38,7 @@ def RGBtoVal(value):
 
 class ConfiglistFrame(wx.Frame, list):
     def __init__(self, parent, list):
-        wx.Frame.__init__(self, parent, -1, _("MDRRC-II Config List"), size=(310, 465))
+        wx.Frame.__init__(self, parent, -1, _("MDRRC-II Config List"), size=(485, 500))
 
 #        self.sizer = wx.BoxSizer(wx.VERTICAL)
 #        self.gridPnl = wx.Panel(self)
@@ -66,6 +66,9 @@ class ConfiglistFrame(wx.Frame, list):
         self.Bind(wx.EVT_MENU, self.ExportSave, menuItem)
         menuItem = filemenu.Append(wx.ID_FILE2, _("&Import\tCtrl+I"),_(" Import config"))
         self.Bind(wx.EVT_MENU, self.Import, menuItem)
+        
+        menuItem = filemenu.Append(wx.ID_REFRESH, _("Re&fresh\tCtrl+F"),_(" Refresh config listing"))
+        self.Bind(wx.EVT_MENU, self.Refresh, menuItem)
         
         filemenu.AppendSeparator()
         
@@ -95,7 +98,11 @@ class ConfiglistFrame(wx.Frame, list):
         ID_IMPORT = wx.NewId()
         tb.AddLabelTool(id=ID_IMPORT, label=_('Import'), bitmap=wx.Bitmap('icons/document-import.png'), longHelp=_('Import config'))
         self.Bind(wx.EVT_TOOL, self.Import, id=ID_IMPORT)
-     
+
+        ID_REFRESHBUTTON = wx.NewId()
+        tb.AddLabelTool(id=ID_REFRESHBUTTON, label=_('Refresh'), bitmap=wx.Bitmap('icons/view-refresh.png'), longHelp=_('Refresh list'))
+        self.Bind(wx.EVT_TOOL, self.Refresh, id=ID_REFRESHBUTTON)
+
         tb.Realize()
 
         #Create an editor for the protocol selection
@@ -187,13 +194,21 @@ class ConfiglistFrame(wx.Frame, list):
           mdrrc2serial.ChangeConfig(key, str(hex(NewValue)), configList)
         else:
         #All cells have a value, regardless of the editor.
+            GoAhead = True
+            if (key == 'Network'):
+                dlg = wx.MessageDialog(self, _("WARNING: Changing this setting requires the hardware to be modified! "), _("Are you sure?"), wx.YES_NO|wx.CANCEL)
+                result = dlg.ShowModal()
+                GoAhead = (result == wx.ID_YES)
+                dlg.Destroy()
         # Modify item in list as a result from editing in the grid
+            if GoAhead:
                 key = self.locgrid.GetCellValue(Row, 0)
                 OldValue = configList[key]
                 NewValue = self.locgrid.GetCellValue(Row, Col).encode('ascii','ignore')
                 configList[key] = NewValue
                 mdrrc2serial.ChangeConfig(key, NewValue, configList)
         event.Skip()
+        self.Refresh(configList)
  
     #This method fires when the underlying GridCellChoiceEditor ComboBox
     #is done with a selection.
@@ -363,6 +378,12 @@ class ConfiglistFrame(wx.Frame, list):
         # Get rid of the dialog to keep things tidy
         dlg.Destroy()
         UpdateStatus(_('Config exported to ')+os.path.join(self.dirname, csvfile))
+
+    def Refresh(self, event):
+        self.Destroy()
+        global configList
+        configList = mdrrc2serial.ReadConfig()
+        frame = ConfiglistFrame(None, configList)
 
 def Foutmelding(parent, message, caption = _('MDRRC-II config editor: Error!')):
   dlg = wx.MessageDialog(parent, message, caption, wx.OK | wx.ICON_WARNING)
