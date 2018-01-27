@@ -124,6 +124,10 @@ def ReadConfig():
       configlist[key]=value
   return configlist
 
+def DottedHexToDec(hex_data):
+  ipaddr = "%i.%i.%i.%i" % (int(hex_data[0:2],16),int(hex_data[2:4],16),int(hex_data[4:6],16),int(hex_data[6:8],16))
+  return ipaddr
+
 def ChangeConfig(key, value, configlist):
   (mdrrc2_port,mdrrc2_baud) = ReadConfigParams()
   for k in configlist:
@@ -157,14 +161,17 @@ def ChangeConfig(key, value, configlist):
           ser.write('CB'+str(value)+'\r')
         elif k == 'Network':
           ser.write('NETWORK'+'\r')
-        elif k == 'IP Adress':
+        elif k == 'IP Address':
           ser.write('IP'+str(value)+'\r')
         elif k == 'IP Netmask':
           ser.write('MASK'+str(value)+'\r')
         elif k == 'IP Gateway':
           ser.write('GATEWAY'+str(value)+'\r')
         elif k == 'MAC Address':
-          ser.write('MAC'+str(value)+'\r')
+          dec_data = ''
+          for hex_data in value.split('.'):
+            dec_data += str(int(hex_data[2:4],16)) + '.'
+          ser.write('MAC'+dec_data[0:23]+'\r')
         ser.close()
         
 def SendCommand(command):
