@@ -124,10 +124,6 @@ def ReadConfig():
       configlist[key]=value
   return configlist
 
-def DottedHexToDec(hex_data):
-  ipaddr = "%i.%i.%i.%i" % (int(hex_data[0:2],16),int(hex_data[2:4],16),int(hex_data[4:6],16),int(hex_data[6:8],16))
-  return ipaddr
-
 def ChangeConfig(key, value, configlist):
   (mdrrc2_port,mdrrc2_baud) = ReadConfigParams()
   for k in configlist:

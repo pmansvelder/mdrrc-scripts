@@ -192,7 +192,6 @@ class ConfiglistFrame(wx.Frame, list):
                 OldValue = configList[key]
                 NewValue = self.locgrid.GetCellValue(Row, Col).encode('ascii','ignore')
                 configList[key] = NewValue
-                print key, NewValue
                 mdrrc2serial.ChangeConfig(key, NewValue, configList)
         event.Skip()
  
