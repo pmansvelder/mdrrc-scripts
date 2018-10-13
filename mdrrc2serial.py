@@ -94,9 +94,9 @@ def ParseLocList():
   (mdrrc2_port,mdrrc2_baud) = ReadConfigParams()
   loclist = {}
   spacing = ReadVersionParams()
-  locdump=ReceiveLocList().splitlines()
+  locdump = ReceiveLocList().splitlines()
   for d in locdump:
-    if d != '':
+    if len(d.split()) > 1:
       if d.split()[0].isdigit():
         for offset in [0,spacing,spacing*2]:
           a=d[offset:offset+spacing]

@@ -344,6 +344,7 @@ class LoclistFrame(wx.Frame, list):
 
 #                                try:
                                         mdrrc2serial.AddLoco(row[_('Adress')])
+                                        print "Adding Loc ",row[_('Adress')]
                                         mdrrc2serial.ChangeLocName(row[_('Adress')],row[_('Name')])
                                         if mdrrc2serial.ParseLocList()[str(int(row[_('Adress')]))][1] != row[_('Protocol')]:
                                                 mdrrc2serial.ChangeLocType(row[_('Adress')],row[_('Protocol')])
