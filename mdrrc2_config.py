@@ -348,16 +348,17 @@ class ConfiglistFrame(wx.Frame, list):
                         dialog = wx.ProgressDialog(_("Importing ")+str(progressMax)+_(" settings..."), _("Time remaining"), progressMax, style=wx.PD_APP_MODAL | wx.PD_ELAPSED_TIME | wx.PD_REMAINING_TIME | wx.PD_AUTO_HIDE)    
                         count = 0
                         for row in reader:
-                                count += 1
                                 try:
+                                        print "Current line = ", row
+                                        count += 1
                                         # only change setting if value is different
                                         if mdrrc2serial.ReadConfig()[row[_('Parameter')]] != row[_('Value')]:
                                                 mdrrc2serial.ChangeConfig(row[_('Parameter')], row[_('Value')], configList)
                                         dialog.Update(count)
                                 except:
-                                        dlg = wx.MessageDialog(self, _("Invalid csv file!"),_("Error"), wx.OK|wx.ICON_WARNING)
+                                        dlg = wx.MessageDialog(self, _("Error in csv file!"),_("Error"), wx.OK|wx.ICON_WARNING)
                                         result = dlg.ShowModal()
-                                        break
+#                                        break
                 mdrrc2serial.StoreConfig()
                 dialog.Destroy()
         else:
